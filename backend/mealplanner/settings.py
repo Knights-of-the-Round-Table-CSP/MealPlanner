@@ -132,14 +132,22 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
-        'rest_framework.authentication.BasicAuthentication',
+        #'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
-        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT Auth
+        'rest_framework.authentication.TokenAuthentication',
+        #'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT Auth
     ),
     'DEFAULT_PERMISSION_CLASSES': [   
         'rest_framework.permissions.IsAuthenticated',  # Default all views require authentication
-    ]
+    ],
+    #'DEFAULT_PARSER_CLASSES': [
+    #    'rest_framework.parsers.JSONParser',
+    #],
 }
+
+LOGIN_URL = "/api/login/"
+LOGIN_REDIRECT_URL = ""
+LOGOUT_REDIRECT_URL = ""
 
 # JWT Settings (Optional)
 #from datetime import timedelta

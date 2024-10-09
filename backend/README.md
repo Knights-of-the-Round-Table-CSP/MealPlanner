@@ -50,7 +50,6 @@ then follow instructions
    
  - Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see all endpoints.
  - Open [Django admin pannel](http://127.0.0.1:8000/admin) to handle users, use superuser credentials to login.
- - There is an anonymous access to [Register](http://127.0.0.1:8000/register/) and [Login](http://127.0.0.1:8000/login/) endpoints.
- - For other endpoints you need to authenticate in browser pop-up with your superuser or created user, if you want to try them. There is no logout, for logout close browser. For another user use incognito.
- - Another option for login is access_token that you receive from [Login](http://127.0.0.1:8000/login/) endpoint. Try it with Postman or save it to localStorage in react later to add to HTTP headers "Authorization: Bearer {your_access_token}"
+ - There is an anonymous access to [Register](http://127.0.0.1:8000/auth/register/) and [Login](http://127.0.0.1:8000/auth/login/) endpoints.
+ - Another option for login is access_token that you receive from [Login](http://127.0.0.1:8000/auth/login/) endpoint. Try it with Postman or save it to localStorage in React later to add to HTTP headers "Authorization: Bearer {your_access_token}"
  - All endpoints accept JSON and return JSON with HTTP status code.

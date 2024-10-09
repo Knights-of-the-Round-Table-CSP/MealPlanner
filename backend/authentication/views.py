@@ -5,10 +5,10 @@ from rest_framework import status
 from django.contrib.auth.models import User
 from rest_framework_simplejwt.tokens import RefreshToken
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth import authenticate, logout
+from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import redirect
 from . serializer import *
-
+    
 class RegisterView(APIView):
     permission_classes = [AllowAny]  # Allow access to anyone, including unauthenticated users
     serializer_class = UserSerializer
@@ -29,20 +29,20 @@ class LoginView(APIView):
     serializer_class = LoginSerializer
 
     def post(self, request):
-        username = request.data.get('username')
-        password = request.data.get('password')
+        serializer = LoginSerializer(data=self.request.data,
+            context={ 'request': self.request })
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data['user']
+        login(request, user)
+        refresh = RefreshToken.for_user(user)
 
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            refresh = RefreshToken.for_user(user)
-            return Response({
-                'refresh': str(refresh),
-                'access': str(refresh.access_token),
-            })
-        return Response({'error': 'Invalid credentials'}, status=status.HTTP_401_UNAUTHORIZED)
+        return Response({
+            'refresh': str(refresh),
+            'access': str(refresh.access_token),
+        })
 
 class LogoutView(APIView):
-    def get(self, request):
+    def post(self, request):
         # request.user.auth_token.delete()
         logout(request)
         return Response({'message': 'User logged out successfully'}, status=status.HTTP_202_ACCEPTED)
