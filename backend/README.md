@@ -11,54 +11,43 @@ here goes backend that will run separately from UI
 
 1. **Clone the repository**
 2. **Navigate to backend root folder**
-
-```bash
-cd backend
-
+   ```bash
+   cd backend
 3. **Set up a virtual environment**
-
-```bash
-python3 -m venv env
-
+   ```bash
+   python3 -m venv env
 4. **Activate the virtual environment**
-
-```bash
-source env/bin/activate
-
+   ```bash
+   source env/bin/activate
 5. **Install the required packages**
-
-```bash
-pip install -r requirements.txt
-
+   ```bash
+   pip install -r requirements.txt
 6. **Create sqlite database**
-
-```bash
-python manage.py migrate
-
+   ```bash
+   python manage.py migrate
 7. **Create django superuser for admin/
-
-```bash
-python manage.py createsuperuser
-
+   ```bash
+   python manage.py createsuperuser
 then follow instructions
 
 ## Usage
 
  - To run the development server, use the following command:
 
-```bash
-python manage.py runserver
+   ```bash
+   python manage.py runserver
 
  - If you make changes in models use the following command to make database changes
 
-```bash
-python manage.py makemigrations
+   ```bash
+   python manage.py makemigrations
+   ```
+   ...before
 
-before
-
-```bash
-python manage.py migrate
-
+   ```bash
+   python manage.py migrate
+   ```
+   
  - Open [http://127.0.0.1:8000/](http://127.0.0.1:8000/) to see all endpoints.
  - Open [Django admin pannel](http://127.0.0.1:8000/admin) to handle users, use superuser credentials to login.
  - There is an anonymous access to [Register](http://127.0.0.1:8000/register/) and [Login](http://127.0.0.1:8000/login/) endpoints.
