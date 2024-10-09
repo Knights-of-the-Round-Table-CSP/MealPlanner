@@ -33,7 +33,7 @@ class LoginView(APIView):
             context={ 'request': self.request })
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
-        login(request, user)
+        
         refresh = RefreshToken.for_user(user)
 
         return Response({
@@ -43,9 +43,7 @@ class LoginView(APIView):
 
 class LogoutView(APIView):
     def post(self, request):
-        # request.user.auth_token.delete()
-        logout(request)
-        return Response({'message': 'User logged out successfully'}, status=status.HTTP_202_ACCEPTED)
+        return Response({'message': 'You cannot logout JWT, delete it from localStore instead'}, status=status.HTTP_200_OK)
 
 class UserProfileView(APIView):
     permission_classes = [IsAuthenticated]
