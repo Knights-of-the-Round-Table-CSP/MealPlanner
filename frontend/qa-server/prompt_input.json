@@ -1,0 +1,20 @@
+[
+  {
+    "userId": "user123",
+    "answers": [
+      "The capital of France is Paris.",
+      "The Eiffel Tower is located in Paris.",
+      "The Louvre is the world's largest art museum."
+    ]
+  },
+  {
+    "userId": "e3794415-9f79-4b5f-8688-d61499deb2f4",
+    "answers": [
+      "sa",
+      "pi",
+      "hel",
+      "hello",
+      "oka! got it "
+    ]
+  }
+]

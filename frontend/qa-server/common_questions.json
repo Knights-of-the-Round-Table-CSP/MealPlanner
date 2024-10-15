@@ -1,0 +1,18 @@
+{
+  "commonQuestions": [
+    {
+      "id": 1,
+      "question": "What is your name?"
+    },
+    {
+      "id": 2,
+      "question": "What is your favorite color?"
+    },
+    {
+      "id": 3,
+      "question": "Where do you live?"
+    }
+  ]
+}
+
+  

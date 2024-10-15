@@ -1,0 +1,104 @@
+/* QAPage.css */
+
+/* General styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 20px;
+}
+
+/* Container for the Q&A page */
+.qa-container {
+    max-width: 800px;
+    margin: auto;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    position: relative;  /* Ensure internal elements like .next-page-link are positioned properly */
+    min-height: 600px;    /* Prevent the container from collapsing if content is short */
+}
+
+/* Title styles */
+.qa-container h1 {
+    font-size: 2em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+/* Subheading styles */
+.qa-container h2 {
+    font-size: 1.5em;
+    color: #555;
+    margin-top: 20px;
+}
+
+/* List styles */
+.qa-container ul {
+    list-style: none;
+    padding: 0;
+}
+
+.qa-container li {
+    padding: 15px;
+    border-bottom: 1px solid #eee;  /* Changed to make borders visible */
+}
+
+/* Input styles */
+.qa-container input[type="text"] {
+    width: 80%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    margin-right: 10px;
+    font-size: 1em;
+}
+
+.qa-container button {
+    padding: 10px 15px;
+    background-color: rgb(199, 231, 205);
+    color: black;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.qa-container button:hover {
+    background-color: green;
+    color: white;
+}
+
+/* Answer text style */
+.qa-container p {
+    margin: 5px 0;
+    color: #666;
+}
+
+/* Next Page link styling */
+.next-page-link {
+    position: fixed;  /* Fixed to always stay at the bottom-right corner */
+    bottom: 60px;     /* Move it higher (60px from the bottom) */
+    right: 60px;      /* Move it more to the left (60px from the right) */
+    font-size: 20px;  /* Increase font size for better visibility */
+    font-weight: bold;
+    background-color: #f0f0f0;
+    padding: 15px 20px;  /* Increase padding to make the link larger */
+    border-radius: 8px;  /* Slightly larger rounded corners */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Larger shadow to stand out */
+    color: #007bff;  /* Link color */
+    text-align: center;
+    transition: background-color 0.3s, transform 0.3s;  /* Smooth transitions */
+}
+
+.next-page-link a {
+    text-decoration: none;
+    color: #007bff;  /* Blue link color */
+}
+
+.next-page-link a:hover {
+    text-decoration: underline;
+    color: #0056b3;  /* Darker blue on hover */
+}
