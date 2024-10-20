@@ -12,7 +12,7 @@ class RecipesView(APIView):
     serializer_class = RecipeSerializer
 
     def get(self, request):
-        recipe = [ {"owner": recipe.owner.username, "name": recipe.name, "description": recipe.description}
+        recipe = [ {"owner": recipe.owner.email, "name": recipe.name, "description": recipe.description}
         for recipe in Recipe.objects.all()]
         
         return Response(recipe)
