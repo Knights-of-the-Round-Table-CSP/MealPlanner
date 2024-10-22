@@ -25,7 +25,7 @@ here goes backend that will run separately from UI
 6. **Create sqlite database**
    ```bash
    python manage.py migrate
-7. **Create django superuser for admin/
+7. **Create django superuser for admin/**
    ```bash
    python manage.py createsuperuser
 then follow instructions
