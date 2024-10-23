@@ -1,5 +1,6 @@
 // UserContext.js
 import React, { createContext, useContext, useState } from 'react';
+import userApiService from '../utils/userApi';
 
 const UserContext = createContext();
 
@@ -11,6 +12,7 @@ export const UserProvider = ({ children }) => {
   };
 
   const logout = () => {
+    localStorage.removeItem('access_token');
     setUser(null); // Clear user data on logout
   };
 

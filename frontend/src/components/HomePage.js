@@ -2,14 +2,18 @@
 
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { onLogin as loginAPI } from '../utils/api'; 
+import { useUser } from '../context/UserContext'; 
+import userApiService from '../utils/userApi';
 import '../static/HomeDesign.css'; 
 
 const HomePage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [loading, setLoading] = useState(false); // Loading state for the login button
+    const [error, setError] = useState('');
+
     const navigate = useNavigate(); // Hook to navigate between pages
+    const { login } = useUser(); // Access the login function from context
 
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -19,24 +23,36 @@ const HomePage = () => {
         }
 
         setLoading(true); // Start loading state
-        try {
-            const result = await loginAPI(email, password); // Call login API
-            console.log('Login successful:', result);
-            console.log(result)
+        userApiService.logIn(email, password)
+        .then(response => {
+            console.log(response.data);
 
-            // Check the response to confirm login success
-            if (result.message === 'Login Successful!') {
-                // Redirect to the QA page after successful login
-                navigate(`/qa/${result.uniqueId}`); // Change this to your desired route
+            let { data } = response;
+            let { access, user } = data;
+            let { id, email, first_name, last_name} = JSON.parse(user);
+
+            if (access && user && id) {
+                console.log('JWT Access Token:', access);
+                // Store the token in localStorage or a cookie for future requests
+                localStorage.setItem('access_token', access);
+
+                let userData = {
+                    accessToken: access,
+                    user: user
+                }
+
+                login(userData)
+                navigate(`/qa/${id}`);
             } else {
-                alert('Login failed: ' + (result.message || 'Please try again.')); // Show any error message returned
+                setError('Login failed.');
             }
-        } catch (error) {
-            console.error('Login failed:', error); // Log any errors
-            alert('Login failed. Please try again.'); // Notify user of failure
-        } finally {
+
             setLoading(false); // Reset loading state after request
-        }
+        })
+        .catch(error => {
+            setError('Login failed:', error.message);
+            setLoading(false); // Reset loading state after request
+        })
     };
 
     return (

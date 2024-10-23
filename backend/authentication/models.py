@@ -50,3 +50,11 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 
     def __str__(self):
         return self.email
+    
+    def to_dict(self):
+        return {
+            'id': str(self.id),  # UUID needs to be converted to a string
+            'email': self.email,
+            'first_name': self.first_name,
+            'last_name': self.last_name,
+        }

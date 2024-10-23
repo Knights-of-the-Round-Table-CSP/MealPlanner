@@ -21,6 +21,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('auth/', include('authentication.urls')),
     path('api/', include(('rest_framework.urls'), namespace="rest_framework")),
-    path('recipes/', include('core.urls'), name="recipes"),
-    path('ai/', include('ai.urls'), name="recipes"),
+    path('api/', include('core.urls'), name="recipes"),
+    path('ai/', include('ai.urls'), name="ai"),
 ]

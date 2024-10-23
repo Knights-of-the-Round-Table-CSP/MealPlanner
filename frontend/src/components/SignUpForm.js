@@ -1,11 +1,16 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom'; 
 import '../static/FormDesign.css';
+import userApiService from '../utils/userApi';
 
-const SignUpForm = ({ onSignUp }) => {
+const SignUpForm = () => {
+
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
+
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
   
@@ -22,23 +27,23 @@ const SignUpForm = ({ onSignUp }) => {
     }
     
     // Attempt to sign up the user
-    const result = await onSignUp(email, password);
-    
-    if (result.error) {
-      setErrorMessage(result.error);
-      setSuccessMessage('');
-    } else {
-      setSuccessMessage('Sign up successful! Please log in.');
-      setErrorMessage('');
-      
-      // Reset form fields
-      setEmail('');
-      setPassword('');
-      setConfirmPassword('');
+    userApiService.signUp(firstName, lastName, email, password)
+      .then(response => {
+        setSuccessMessage('Sign up successful! Please log in.');
+        setErrorMessage('');
+        
+        // Reset form fields
+        setEmail('');
+        setPassword('');
+        setConfirmPassword('');
 
-      // Redirect to login page after successful signup
-      navigate('/login'); // Redirect to login
-    }
+        // Redirect to login page after successful signup
+        navigate('/login'); // Redirect to login
+      })
+      .catch(error => {
+        setErrorMessage(error.message);
+        setSuccessMessage('');
+      });
   };
 
   return (
@@ -46,6 +51,26 @@ const SignUpForm = ({ onSignUp }) => {
       <div className="form-box login-signup-form"> {/* New class added */}
       <h2 className="heading">Sign Up</h2>
         <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="first-name">First name:</label>
+            <input
+              id="first-name"
+              type="text"
+              value={firstName}
+              onChange={(e) => setFirstName(e.target.value)}
+              required
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="last-name">Last name:</label>
+            <input
+              id="last-name"
+              type="text"
+              value={lastName}
+              onChange={(e) => setLastName(e.target.value)}
+              required
+            />
+          </div>
           <div className="form-group">
             <label htmlFor="email">Email:</label>
             <input

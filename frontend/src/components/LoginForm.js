@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { onLogin } from '../utils/api'; // Import your API function
 import { useUser } from '../context/UserContext'; 
+import userApiService from '../utils/userApi';
 import '../static/FormDesign.css';
 
 const LoginForm = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const [error, setError] = useState('');
   const navigate = useNavigate();
   const { login } = useUser(); // Access the login function from context
@@ -18,18 +19,34 @@ const LoginForm = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
-    try {
-      const data = await onLogin(email, password);
-      if (data.message === 'Login Successful!') {
-        login({ uniqueId: data.uniqueId }); // Assuming your API returns a uniqueId
-        navigate(`/qa/${data.uniqueId}`);
-      } else {
-        setError(data.message || 'Login failed.');
-      }
-    } catch (error) {
-      console.error('Error during login:', error);
-      setError('An error occurred. Please try again.');
-    }
+      userApiService.logIn(email, password)
+      .then(response => {
+        console.log(response.data);
+
+        let { data } = response;
+        let { access, user } = data;
+        let { id, email, first_name, last_name} = JSON.parse(user);
+
+        if (access && user && id) {
+          console.log('JWT Access Token:', access);
+          // Store the token in localStorage or a cookie for future requests
+          localStorage.setItem('access_token', access);
+
+          let userData = {
+            accessToken: access,
+            user: user
+          }
+
+          login(userData)
+          navigate(`/qa/${id}`);
+        } else {
+          setError('Login failed.');
+        }
+      })
+      .catch(error => {
+        setError('Login failed:', error.message);
+      })
+
   };
 
   return (

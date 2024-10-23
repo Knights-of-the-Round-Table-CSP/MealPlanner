@@ -1,8 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import axios from 'axios';
 import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../static/qa.css';
+import questionsApiService from '../utils/questionApi';
+import answersApiService from '../utils/answerApi';
 
 const QAPage = () => {
     const navigate = useNavigate(); // Initialize useNavigate
@@ -10,34 +11,40 @@ const QAPage = () => {
     const [questions, setQuestions] = useState([]); // State to hold questions
     const [userAnswers, setUserAnswers] = useState([]); // State to hold user's answers
     const [newAnswers, setNewAnswers] = useState({}); // State to hold new answers for each question
-    const [selectedQuestionId, setSelectedQuestionId] = useState(null); // Track which question is being answered
 
     useEffect(() => {
-        const fetchQuestions = async () => {
-            try {
-                const response = await axios.get('http://localhost:5001/api/common-qa');
-                console.log('Fetched response data:', response.data); // Log the entire response data
-                const questionsArray = response.data;
-                if (Array.isArray(questionsArray)) {
-                    setQuestions(questionsArray); // Set questions if it's an array
-                } else {
-                    console.error('Expected an array but got:', response.data.commonQuestions);
-                    setQuestions([]); // Reset to empty array if it's not an array
+        questionsApiService.list()
+            .then(response => {
+                if (response.data){
+                    console.log('Fetched response data:', response.data); // Log the entire response data
+                    const questionsArray = response.data;
+                    if (Array.isArray(questionsArray)) {
+                        setQuestions(questionsArray); // Set questions if it's an array
+                    } else {
+                        console.error('Expected an array but got:', response.data.commonQuestions);
+                        setQuestions([]); // Reset to empty array if it's not an array
+                    }
                 }
-            } catch (error) {
+                else {
+                    // handle error
+                    console.error('Error fetching common questions.', response);
+                }
+            })
+            .catch(error => {
+                // handle error
                 console.error('Error fetching common questions:', error.response ? error.response.data : error.message);
-            }
+            })
 
-            try {
-                const userAnswersResponse = await axios.get(`http://localhost:5001/api/user-qa/${id}`);
-                console.log('Fetched user answers:', userAnswersResponse.data); // Log the user answers
-                setUserAnswers(userAnswersResponse.data.userEntries || []); // Ensure userAnswers is an array
-            } catch (error) {
+        answersApiService.listUserAnswers()
+            .then(response => {
+                if (response.data) {
+                    console.log('Fetched user answers:', response.data); // Log the user answers
+                    setUserAnswers(response.data || []); // Ensure userAnswers is an array
+                }
+            })
+            .catch(error => {
                 console.error('Error fetching user answers:', error.response ? error.response.data : error.message);
-            }
-        };
-
-        fetchQuestions();
+            })
     }, [id]);
 
     const handleGoToPrompt = () => {
@@ -47,21 +54,20 @@ const QAPage = () => {
     const handleSubmit = async (e, questionId) => {
         e.preventDefault(); // Prevent the default form submission behavior
         if (questionId && newAnswers[questionId]) {
-            try {
-                // Post the new answer to the server
-                const response = await axios.post(`http://localhost:5001/api/user-qa`, { 
-                    userId: id,
-                    questionId: questionId,
-                    answer: newAnswers[questionId] // Use the answer for the specific question
-                });
-                console.log('Response from POST:', response.data); // Log the response from POST
-                // Update local state with the new answer
-                setUserAnswers(prev => [...prev, { userId: id, questionId, answer: newAnswers[questionId] }]);
-                setNewAnswers(prev => ({ ...prev, [questionId]: '' })); // Clear the specific answer field
-                setSelectedQuestionId(null); // Reset selected question
-            } catch (error) {
-                console.error('Error submitting answer:', error.response ? error.response.data : error.message);
-            }
+            //for (let answer of newAnswers[questionId]){
+                let answerObject = {
+                   questionId: questionId,
+                   answer: newAnswers[questionId]
+                }
+
+                answersApiService.addUserAnswer(answerObject)
+                    .catch(error => {
+                        console.error('Error submitting answer:', error.response ? error.response.data : error.message);
+                    });
+            //}
+
+            setUserAnswers(prev => [...prev, { userId: id, questionId, answer: newAnswers[questionId] }]);
+            setNewAnswers(prev => ({ ...prev, [questionId]: '' })); // Clear the specific answer field
         }
     };
 
@@ -86,7 +92,6 @@ const QAPage = () => {
                                         value={newAnswers[question.id] || ''} // Control the input value based on the question ID
                                         onChange={(e) => {
                                             setNewAnswers(prev => ({ ...prev, [question.id]: e.target.value })); // Update the specific answer
-                                            setSelectedQuestionId(question.id); // Set selected question ID
                                         }}
                                         placeholder="Type your answer here"
                                     />

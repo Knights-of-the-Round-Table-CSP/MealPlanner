@@ -8,6 +8,7 @@ from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth import authenticate, logout, login
 from django.shortcuts import redirect
 from . serializer import *
+import json
     
 class RegisterView(APIView):
     permission_classes = [AllowAny]  # Allow access to anyone, including unauthenticated users
@@ -46,6 +47,7 @@ class LoginView(APIView):
         return Response({
             'refresh': str(refresh),
             'access': str(refresh.access_token),
+            'user': json.dumps(user.to_dict())
         })
 
 class LogoutView(APIView):

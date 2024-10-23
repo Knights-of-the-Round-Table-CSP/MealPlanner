@@ -136,7 +136,7 @@ REST_FRAMEWORK = {
         #'rest_framework.authentication.BasicAuthentication',
         'rest_framework.authentication.SessionAuthentication',
         'rest_framework.authentication.TokenAuthentication',
-        #'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT Auth
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # JWT Auth
     ),
     'DEFAULT_PERMISSION_CLASSES': [   
         'rest_framework.permissions.IsAuthenticated',  # Default all views require authentication
@@ -162,4 +162,8 @@ LOGOUT_REDIRECT_URL = ""
 
 # CORS
 
-CORS_ORIGIN_ALLOW_ALL = True
+CORS_ORIGIN_ALLOW_ALL = False
+# Allow requests from React frontend (adjust the URL)
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+]
