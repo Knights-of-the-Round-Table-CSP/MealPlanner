@@ -1,0 +1,35 @@
+/* NavBar.css */
+
+.navbar {
+    background-color: lightblue;
+    color: white;
+    padding: 10px 0;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    box-sizing: border-box; /* Add this line */
+  
+}
+
+
+.navbar ul {
+    list-style: none; /* Remove bullet points */
+    display: flex; /* Use flexbox for horizontal alignment */
+    justify-content: space-around; /* Space links evenly */
+    margin: 0; /* Remove margin */
+    padding: 0; /* Remove padding */
+}
+
+.navbar li {
+    margin: 0 15px; /* Spacing between links */
+}
+
+.navbar a {
+    color: white; /* Link text color */
+    text-decoration: none; /* Remove underline from links */
+}
+
+.navbar a:hover {
+    text-decoration: underline; /* Underline on hover */
+    color: rgb(111, 111, 189);
+}

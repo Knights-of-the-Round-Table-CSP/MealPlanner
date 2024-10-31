@@ -1,17 +1,21 @@
 div#root {
-    width: 50%;
+    width: 100%;
 }
 
 body {
     font-family: Arial, sans-serif;
+    background-color: #f4f4f4; /* Background color for forms */
+    display: flex;
+    justify-content: center;
     margin: 0;
-    padding: 0;
 }
 
 .page-container {
     display: flex;
     flex-direction: column;
     height: 100vh;
+    justify-content: center; /* Center child elements horizontally */
+  align-items: center; /* Center child elements vertically */
 }
 
 h1 {
@@ -32,7 +36,7 @@ h1 {
     justify-content: center; /* Center content horizontally */
     align-items: center; /* Center content vertically */
     background-image: url('/src/resources/logo192.png'); /* Background image */
-    background-size: contain; /* Make the image fit within the area */
+    background-size: 50% auto;
     background-repeat: no-repeat; /* Prevents repeating the image */
     background-position: center; /* Center the background image */
     height: 100%; /* Ensure height takes the full container height */

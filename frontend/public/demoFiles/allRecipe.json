@@ -1,0 +1,223 @@
+[
+    {
+        "id": 1,
+        "isBreakfast": true,
+        "isLunch": false,
+        "isDinner": false,
+        "recipeName": "Pancakes",
+        "ingredients": [
+            "1 cup flour",
+            "2 tablespoons sugar",
+            "1 teaspoon baking powder",
+            "1/2 teaspoon baking soda",
+            "1/4 teaspoon salt",
+            "1 cup milk",
+            "1 egg",
+            "2 tablespoons melted butter"
+        ],
+        "preparationTime": "15 minutes",
+        "steps": [
+            "In a bowl, mix flour, sugar, baking powder, baking soda, and salt.",
+            "In another bowl, whisk milk, egg, and melted butter.",
+            "Combine wet and dry ingredients, stirring until just mixed.",
+            "Heat a skillet over medium heat and pour batter to form pancakes.",
+            "Cook until bubbles form on the surface, then flip and cook until golden brown."
+        ],
+        "isShort": true,
+        "isLong": false
+    },
+    {
+        "id": 2,
+        "isBreakfast": false,
+        "isLunch": true,
+        "isDinner": false,
+        "recipeName": "Caesar Salad",
+        "ingredients": [
+            "Romaine lettuce",
+            "Croutons",
+            "Parmesan cheese",
+            "Caesar dressing",
+            "Black pepper"
+        ],
+        "preparationTime": "10 minutes",
+        "steps": [
+            "Chop the Romaine lettuce into bite-sized pieces.",
+            "In a bowl, combine lettuce, croutons, and Parmesan cheese.",
+            "Drizzle Caesar dressing over the salad and toss to combine.",
+            "Season with black pepper to taste."
+        ],
+        
+        "isLong": true,
+        "isShort": false
+    },
+    {
+        "id": 3,
+        "isBreakfast": false,
+        "isLunch": false,
+        "isDinner": true,
+        "recipeName": "Spaghetti Carbonara",
+        "ingredients": [
+            "200g spaghetti",
+            "100g pancetta",
+            "2 eggs",
+            "50g Parmesan cheese",
+            "Black pepper",
+            "Salt"
+        ],
+        "preparationTime": "20 minutes",
+        "steps": [
+            "Cook spaghetti according to package instructions.",
+            "In a pan, cook pancetta until crispy.",
+            "In a bowl, whisk eggs and Parmesan cheese.",
+            "Combine hot pasta with pancetta and remove from heat.",
+            "Quickly add the egg mixture and toss until creamy.",
+            "Serve with extra cheese and black pepper."
+        ],
+        "isShort": false,
+        "isLong": true
+    },
+    {
+        "id": 4,
+        "isBreakfast": true,
+        "isLunch": false,
+        "isDinner": false,
+        "recipeName": "Omelette",
+        "ingredients": [
+            "2 eggs",
+            "Salt to taste",
+            "Pepper to taste",
+            "1/4 cup cheese",
+            "1/4 cup diced vegetables (bell peppers, onions, etc.)"
+        ],
+        "preparationTime": "10 minutes",
+        "steps": [
+            "Whisk eggs with salt and pepper.",
+            "Heat a non-stick skillet over medium heat.",
+            "Pour in eggs and cook until edges are set.",
+            "Add cheese and vegetables on one side.",
+            "Fold the omelette and cook for another minute."
+        ],
+        "isShort": true,
+        "isLong": false
+    },
+    {
+        "id": 5,
+        "isBreakfast": false,
+        "isLunch": true,
+        "isDinner": true,
+        "recipeName": "Grilled Cheese Sandwich",
+        "ingredients": [
+            "2 slices of bread",
+            "2 slices of cheese",
+            "Butter"
+        ],
+        "preparationTime": "5 minutes",
+        "steps": [
+            "Butter one side of each slice of bread.",
+            "Place cheese between the unbuttered sides of the bread.",
+            "Heat a skillet over medium heat and grill the sandwich until golden brown on both sides."
+        ],
+        "isShort": true,
+        "isLong": false
+    },
+    {
+        "id": 6,
+        "isBreakfast": false,
+        "isLunch": false,
+        "isDinner": true,
+        "recipeName": "Grilled Cheese Sandwich",
+        "ingredients": [
+            "2 slices of bread",
+            "2 slices of cheese",
+            "Butter"
+        ],
+        "preparationTime": "5 minutes",
+        "steps": [
+            "Butter one side of each slice of bread.",
+            "Place cheese between the unbuttered sides of the bread.",
+            "Heat a skillet over medium heat and grill the sandwich until golden brown on both sides."
+        ],
+        "isShort": false,
+        "isLong": true
+    },
+    {
+        "id": 7,
+        "isBreakfast": false,
+        "isLunch": true,
+        "isDinner": true,
+        "recipeName": "Grilled Cheese Sandwich",
+        "ingredients": [
+            "2 slices of bread",
+            "2 slices of cheese",
+            "Butter"
+        ],
+        "preparationTime": "5 minutes",
+        "steps": [
+            "Butter one side of each slice of bread.",
+            "Place cheese between the unbuttered sides of the bread.",
+            "Heat a skillet over medium heat and grill the sandwich until golden brown on both sides."
+        ],
+        "isShort": true,
+        "isLong": false
+    },
+    {
+        "id": 8,
+        "isBreakfast": false,
+        "isLunch": true,
+        "isDinner": true,
+        "recipeName": "Grilled Cheese Sandwich",
+        "ingredients": [
+            "2 slices of bread",
+            "2 slices of cheese",
+            "Butter"
+        ],
+        "preparationTime": "5 minutes",
+        "steps": [
+            "Butter one side of each slice of bread.",
+            "Place cheese between the unbuttered sides of the bread.",
+            "Heat a skillet over medium heat and grill the sandwich until golden brown on both sides."
+        ],
+        "isShort": true,
+        "isLong": false
+    },
+    {
+        "id": 9,
+        "isBreakfast": false,
+        "isLunch": true,
+        "isDinner": true,
+        "recipeName": "Grilled Cheese Sandwich",
+        "ingredients": [
+            "2 slices of bread",
+            "2 slices of cheese",
+            "Butter"
+        ],
+        "preparationTime": "5 minutes",
+        "steps": [
+            "Butter one side of each slice of bread.",
+            "Place cheese between the unbuttered sides of the bread.",
+            "Heat a skillet over medium heat and grill the sandwich until golden brown on both sides."
+        ],
+        "isShort": true,
+        "isLong": false
+    },
+    {
+        "id": 10,
+        "isBreakfast": false,
+        "isLunch": true,
+        "isDinner": true,
+        "recipeName": "Grilled Cheese Sandwich",
+        "ingredients": [
+            "2 slices of bread",
+            "2 slices of cheese",
+            "Butter"
+        ],
+        "preparationTime": "5 minutes",
+        "steps": [
+            "Butter one side of each slice of bread.",
+            "Place cheese between the unbuttered sides of the bread.",
+            "Heat a skillet over medium heat and grill the sandwich until golden brown on both sides."
+        ],
+        "isShort": true,
+        "isLong": false
+    }
+]
