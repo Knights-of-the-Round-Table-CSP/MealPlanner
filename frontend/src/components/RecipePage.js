@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import aiApiService from '../utils/aiApi'; // Assuming you have an API service for LLM
 import '../static/recipePage.css'; // Add your CSS for styling
+import recipeApi from '../utils/recipeApi';
 
 const RecipePage = () => {
   const { recipeId } = useParams();
@@ -12,20 +13,36 @@ const RecipePage = () => {
   const [llmLoading, setLlmLoading] = useState(false);
   const navigate = useNavigate();
 
-  // Function to fetch recipe data by ID
   const fetchRecipeData = async () => {
     try {
-      console.log("Fetching recipe data...");
-      const response = await fetch('/demoFiles/allRecipe.json');
+      console.log("Fetching recipe data from the secondary source...");
+      const response = await recipeApi.listUserRecipes(); // Try fetching from the secondary source
       const allRecipes = await response.json();
       const foundRecipe = allRecipes.find(r => r.id === parseInt(recipeId));
+
       if (foundRecipe) {
         setRecipe(foundRecipe);
       } else {
-        setError('Recipe not found.');
+        throw new Error('Recipe not found in the secondary source.'); // Throw an error to trigger the fallback
       }
     } catch (error) {
-      setError('Error fetching recipe data.');
+      console.error('Error fetching from secondary source:', error.message);
+      // Fallback to primary source if the secondary source fails
+      try {
+        console.log("Fetching recipe data from the primary source...");
+        const response = await fetch('/demoFiles/allRecipe.json');
+        const allRecipes = await response.json();
+        const foundRecipe = allRecipes.find(r => r.id === parseInt(recipeId));
+
+        if (foundRecipe) {
+          setRecipe(foundRecipe);
+        } else {
+          setError('Recipe not found in the primary source.');
+        }
+      } catch (error) {
+        console.error('Error fetching from primary source:', error.message);
+        setError('Error fetching recipe data from both sources.');
+      }
     } finally {
       setLoading(false);
     }
@@ -45,7 +62,6 @@ const RecipePage = () => {
 
     setLlmLoading(true);
     setLlmResponse('');
-    
 
     const prompt = recipe.isShort
       ? `Expand the recipe: ${recipe.recipeName}. Ingredients: ${recipe.ingredients.join(', ')}. Steps: ${recipe.steps.join(', ')}`
@@ -60,9 +76,10 @@ const RecipePage = () => {
       } else {
         setLlmResponse('Failed to fetch LLM response.');
       }
-      console.log("after receiving LLM response")
+      console.log("after receiving LLM response");
       await fetchRecipeData(); // Reload the recipe data on toggle
     } catch (error) {
+      console.error('Error fetching LLM response:', error);
       setLlmResponse(error.response ? error.response.data.message : error.message);
     } finally {
       setLlmLoading(false);
@@ -91,11 +108,11 @@ const RecipePage = () => {
           ))}
         </ol>
         <div style={{ display: 'flex', gap: '10px' }}>
-  <button onClick={handleToggleRecipe}>
-    {recipe.isShort ? 'Maximize' : 'Minimize'}
-  </button>
-  <button onClick={handleGoBack}>Go Back</button>
-</div>
+          <button onClick={handleToggleRecipe}>
+            {recipe.isShort ? 'Maximize' : 'Minimize'}
+          </button>
+          <button onClick={handleGoBack}>Go Back</button>
+        </div>
 
         {/* Output box for LLM response */}
         {llmLoading && <p>Loading LLM response...</p>}

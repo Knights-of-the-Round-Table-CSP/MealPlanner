@@ -106,8 +106,13 @@ const SignUpForm = () => {
         {errorMessage && <p className="error">{errorMessage}</p>}
         {successMessage && <p className="success">{successMessage}</p>}
         <p>
-          Already have an account? <Link to="/login">Log In</Link>
+          Already have an account? 
         </p>
+        <a className="next-page-link" onClick={(e) => {
+                                e.preventDefault(); // Prevent default link behavior
+                                navigate('/login');
+                            }}
+                            href="/login">Login</a>
       </div>
     </div>
   );

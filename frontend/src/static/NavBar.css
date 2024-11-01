@@ -2,34 +2,39 @@
 
 .navbar {
     background-color: lightblue;
-    color: white;
-    padding: 10px 0;
+    color: black;
+    padding: 20px 0;
     width: 100%;
     top: 0;
-    z-index: 1000;
-    box-sizing: border-box; /* Add this line */
-  
+    left: 0; /* Ensure it stretches across the page */
+    position: fixed; /* Keeps the navbar at the top */
+    box-sizing: border-box;
+    z-index: 1000; /* Ensures the navbar stays on top of other elements */
 }
 
-
 .navbar ul {
-    list-style: none; /* Remove bullet points */
-    display: flex; /* Use flexbox for horizontal alignment */
-    justify-content: space-around; /* Space links evenly */
-    margin: 0; /* Remove margin */
-    padding: 0; /* Remove padding */
+    list-style: none;
+    display: flex;
+    justify-content: space-around;
+    margin: 0;
+    padding: 0;
 }
 
 .navbar li {
-    margin: 0 15px; /* Spacing between links */
+    margin: 0 15px;
 }
 
 .navbar a {
-    color: white; /* Link text color */
-    text-decoration: none; /* Remove underline from links */
+    color: black;
+    text-decoration: none;
+    font-family:Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+    font-size: 120%;
+    font-weight: bold;
+
 }
 
 .navbar a:hover {
-    text-decoration: underline; /* Underline on hover */
-    color: rgb(111, 111, 189);
+    text-decoration: underline;
+    color: black;
+    font-size: 20px;
 }

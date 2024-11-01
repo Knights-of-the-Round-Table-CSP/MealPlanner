@@ -30,8 +30,8 @@ class UserApiService {
   profile() {
     return this.api.get('/profile/');
   }
+ 
 }
 
-// Export an instance of the UserApiService
 const userApiService = new UserApiService();
 export default userApiService;

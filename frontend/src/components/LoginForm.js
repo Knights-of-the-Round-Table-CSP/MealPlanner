@@ -29,8 +29,8 @@ const LoginForm = () => {
 
         if (access && user && id) {
           console.log('JWT Access Token:', access);
-          // Store the token in localStorage or a cookie for future requests
           localStorage.setItem('access_token', access);
+          localStorage.setItem('user_id', id);
 
           let userData = {
             accessToken: access,
@@ -38,20 +38,21 @@ const LoginForm = () => {
           }
 
           login(userData)
-          navigate(`/qa/${id}`);
+          navigate(`/prompt/${id}`); 
         } else {
           setError('Login failed.');
         }
       })
       .catch(error => {
         setError('Login failed:', error.message);
+        setTimeout(() => setError(''), 1000);
       })
 
   };
 
   return (
     <div className="container">
-      {error && <p className="error-message">{error}</p>}
+      {error && <p className="error-message-login">Not vaild credentials</p>}
       <form onSubmit={handleSubmit} className="form-box">
         <div className="form-group">
         <h2>Login</h2>
@@ -76,8 +77,11 @@ const LoginForm = () => {
         </div>
         <button type="submit">Login</button>
         <p>
-        Don't have an account? <Link to="/signup">Sign Up</Link>
+        Don't have an account? <br></br>
       </p>
+      <a className="next-page-link" onClick={(e) => { e.preventDefault(); // Prevent default link behavior
+      navigate('/signup');}}
+      href="/signup"> Sign up</a>
       </form>
     </div>
   );

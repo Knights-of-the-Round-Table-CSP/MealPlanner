@@ -7,11 +7,14 @@ import { UserProvider } from './context/UserContext'; // Import your UserProvide
 import PromptPage from './components/PromptPage';
 import RecipePage from './components/RecipePage';
 import NavBar from './components/NavBar';
+import UserProfile from './components/UserProfilePage';
+import Footer from './components/Footer';
 
 function App() {
   return (
     <UserProvider> {/* Wrap Routes with UserProvider */}
       <NavBar /> {/* Place NavBar at the top, outside of Routes */}
+      <Footer /> {/* Add Footer here */}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginForm onLoginSuccess={() => console.log('Logged in successfully')} />} />
@@ -19,6 +22,7 @@ function App() {
         <Route path="/qa/:id" element={<QApage />} />
         <Route path="/prompt/:userId" element={<PromptPage />} />
         <Route path="/recipe/:recipeId" element={<RecipePage />} />
+        <Route path="/userProfile/:userId" element={<UserProfile />} /> {/* User profile with dynamic ID */}
       </Routes>
     </UserProvider>
   );

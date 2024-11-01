@@ -1,16 +1,8 @@
-/* QAPage.css */
-
-
-/* Container for the Q&A page */
 .qa-container {
-    max-width: 800px;
-    margin: auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    position: relative;  /* Ensure internal elements like .next-page-link are positioned properly */
-    min-height: 600px;    /* Prevent the container from collapsing if content is short */
+    display: block; /* Change from flex to block */
+    margin: 0 auto; /* Center container if necessary, though this is optional */
+    padding: 20px; /* Add some padding */
+    max-width: 100%; /* Optional: Limit the width for readability */
 }
 
 /* Title styles */
@@ -40,7 +32,7 @@
 
 /* Input styles */
 .qa-container input[type="text"] {
-    width: 80%;
+    width: 50%;
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -57,6 +49,7 @@
     cursor: pointer;
     font-size: 1em;
     transition: background-color 0.3s;
+    width: 8%;
 }
 
 .qa-container button:hover {
@@ -68,30 +61,4 @@
 .qa-container p {
     margin: 5px 0;
     color: #666;
-}
-
-/* Next Page link styling */
-.next-page-link {
-    position: fixed;  /* Fixed to always stay at the bottom-right corner */
-    bottom: 60px;     /* Move it higher (60px from the bottom) */
-    right: 60px;      /* Move it more to the left (60px from the right) */
-    font-size: 20px;  /* Increase font size for better visibility */
-    font-weight: bold;
-    background-color: #f0f0f0;
-    padding: 15px 20px;  /* Increase padding to make the link larger */
-    border-radius: 8px;  /* Slightly larger rounded corners */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Larger shadow to stand out */
-    color: #007bff;  /* Link color */
-    text-align: center;
-    transition: background-color 0.3s, transform 0.3s;  /* Smooth transitions */
-}
-
-.next-page-link a {
-    text-decoration: none;
-    color: #007bff;  /* Blue link color */
-}
-
-.next-page-link a:hover {
-    text-decoration: underline;
-    color: #0056b3;  /* Darker blue on hover */
 }

@@ -3,7 +3,8 @@
   display: flex; /* Enable Flexbox for child alignment */
   justify-content: center; /* Center child elements horizontally */
   align-items: center; /* Center child elements vertically */
-  margin: 0; /* No margins for full width */
+  margin-top: 1%;
+
 }
 
 /* Centered content container styling */
@@ -115,33 +116,7 @@
 .grid-item p {
   margin: 6px 0;
 }
-/* Next Page link styling */
-.next-page-link {
-  position: fixed;
-  bottom: 20px; /* Reduced bottom offset for better visibility */
-  right: 20px; /* Reduced right offset */
-  font-size: 20px;
-  font-weight: bold;
-  background-color: #f0f0f0;
-  padding: 15px 20px;
-  border-radius: 8px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  color: #007bff;
-  text-align: center;
-  transition: background-color 0.3s, transform 0.3s;
-}
 
-.next-page-link a {
-  text-decoration: none;
-  color: #007bff;
-}
-
-.next-page-link a:hover {
-  text-decoration: underline;
-  color: #0056b3;
-}
-
-/* Error message styling */
 .error-message {
   color: red;
 }

@@ -6,6 +6,7 @@ import '../static/gridView.css';
 
 const PromptPage = () => {
   const { userId } = useParams();
+  console.log(userId,"from prompt")
   const navigate = useNavigate();
   const [userAnswers, setUserAnswers] = useState([]);
   const [formInput, setFormInput] = useState('');
@@ -235,11 +236,6 @@ return (
             {dinnerData.length > 0 ? dinnerData.map(renderRecipeItem) : <p>No data available</p>}
           </div>
         </div>
-      </div>
-
-      {/* Link to Next Page */}
-      <div className="next-page-link">
-        <a href="/next">Next Page</a>
       </div>
     </div>
   </div>

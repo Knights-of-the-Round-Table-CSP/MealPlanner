@@ -9,60 +9,64 @@ import '../static/HomeDesign.css';
 const HomePage = () => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const [loading, setLoading] = useState(false); // Loading state for the login button
+    const [loading, setLoading] = useState(false);
     const [error, setError] = useState('');
-
-    const navigate = useNavigate(); // Hook to navigate between pages
-    const { login } = useUser(); // Access the login function from context
+    const navigate = useNavigate();
+    const { login } = useUser();
 
     const handleSubmit = async (e) => {
         e.preventDefault();
         if (!email || !password) {
-            alert('Please fill in both fields.'); // Basic validation
+            alert('Please fill in both fields.');
             return;
         }
 
-        setLoading(true); // Start loading state
+        setLoading(true);
         userApiService.logIn(email, password)
-        .then(response => {
-            console.log(response.data);
+            .then(response => {
+                const { data } = response;
+                const { access, user } = data;
+                const { id, email, first_name, last_name } = JSON.parse(user);
 
-            let { data } = response;
-            let { access, user } = data;
-            let { id, email, first_name, last_name} = JSON.parse(user);
+                if (access && user && id) {
+                    localStorage.setItem('access_token', access);
 
-            if (access && user && id) {
-                console.log('JWT Access Token:', access);
-                // Store the token in localStorage or a cookie for future requests
-                localStorage.setItem('access_token', access);
+                    // Store complete user data including first and last names
+                    let userData = {
+                        accessToken: access,
+                        user: {
+                            id,
+                            email,
+                            first_name,
+                            last_name,
+                        }
+                    };
 
-                let userData = {
-                    accessToken: access,
-                    user: user
+                    login(userData); // Save user data to context
+                    navigate(`/prompt/${id}`); 
+                } else {
+                    setError('Login failed.');
+                    setTimeout(() => setError(''), 1000);
                 }
 
-                login(userData)
-                navigate(`/qa/${id}`);
-            } else {
-                setError('Login failed.');
-            }
-
-            setLoading(false); // Reset loading state after request
-        })
-        .catch(error => {
-            setError('Login failed:', error.message);
-            setLoading(false); // Reset loading state after request
-        })
+                setLoading(false);
+            })
+            .catch(error => {
+                setError('Login failed:', error.message);
+                setLoading(false);
+                setTimeout(() => setError(''), 1000);
+            });
     };
 
     return (
         <div className="page-container">
             <h1>Welcome</h1>
-            <div className="flex-container"> {/* Flex container for left and right sides */}
+            <div className="flex-container">
                 <div className="left-side">
-                    {/* This is where the image will be displayed */}
+                    {/* Display image or other content */}
                 </div>
                 <div className="right-side">
+                {error && <p className="error-message-login">Not vaild credentials</p>}
                     <div className="login-box">
                         <h2>Login</h2>
                         <form onSubmit={handleSubmit}>
@@ -82,26 +86,17 @@ const HomePage = () => {
                             />
                             <button type="submit" disabled={loading}>
                                 {loading ? 'Logging in...' : 'Login'}
-                            </button> {/* Disable button while loading */}
+                            </button>
                         </form>
-    
-                        {/* Sign Up Link */}
                         <div className="signup-option">
                             <p>
-                                Don't have an account? 
-                                <button 
-                                    onClick={() => navigate('/signup')} 
-                                    style={{ 
-                                        background: 'none', 
-                                        border: 'none', 
-                                        color: '#1e88e5', 
-                                        textDecoration: 'underline', 
-                                        cursor: 'pointer' 
-                                    }} 
-                                >
-                                    Sign up here
-                                </button>
+                                Don't have an account? <br></br><br></br>
                             </p>
+                            <a className="next-page-link" onClick={(e) => {
+                                e.preventDefault(); // Prevent default link behavior
+                                navigate('/signup');
+                            }}
+                            href="/signup"> Sign up</a>
                         </div>
                     </div>
                 </div> 
