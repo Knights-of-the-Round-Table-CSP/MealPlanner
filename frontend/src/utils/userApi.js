@@ -28,7 +28,13 @@ class UserApiService {
   }
 
   profile() {
-    return this.api.get('/profile/');
+    let token = localStorage.getItem('access_token');
+    
+    return this.api.get('/profile/', {
+      headers: {
+        'Authorization': `Bearer ${token}`
+      }
+    });
   }
  
 }
