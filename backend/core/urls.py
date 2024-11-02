@@ -1,8 +1,10 @@
 from django.urls import path
-from .views import *
+
+from .qa.views import *
+from .recipe.views import *
 
 urlpatterns = [
-    path('recipe/', NewRecipeView.as_view(), name='new_recipe'),
+    path('recipe/<str:type>', NewRecipeView.as_view(), name='new_recipe'),
     path('recipes/', RecipesView.as_view(), name='recipes'),
     path('recipes/<int:pk>', RecipeView.as_view(), name='recipe'),
     path('recipes/generate/', GenerateRecipeView.as_view(), name='generate recipe'),

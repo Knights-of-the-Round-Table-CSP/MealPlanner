@@ -1,6 +1,6 @@
 from rest_framework import serializers
-from . models import *
-from . enums import RecipeFlags
+from .. models import *
+from .. enums import RecipeFlags
 
 class RecipeSerializer(serializers.ModelSerializer):
     class Meta:
@@ -12,22 +12,10 @@ class IngredientSerializer(serializers.ModelSerializer):
         model = Ingredient
         fields = ['id', 'recipeId', 'name', 'quantity', 'unit']
 
-class IngredientInputSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Ingredient
-        fields = ['name', 'quantity', 'unit']
-
 class CookingStepSerializer(serializers.ModelSerializer):
     class Meta:
         model = CookingStep
         fields = ['id', 'recipeId', 'number', 'instruction']
-
-class CookingStepInputSerializer(serializers.ModelSerializer):
-    step_number = serializers.IntegerField(source='number')
-
-    class Meta:
-        model = CookingStep
-        fields = ['step_number', 'instruction']
 
 class RecipeReturnModelSerializer(serializers.ModelSerializer):
     preparationTime = serializers.SerializerMethodField()
@@ -50,7 +38,7 @@ class RecipeReturnModelSerializer(serializers.ModelSerializer):
     def get_steps(self, obj):
         return [
             f"{step.number}. {step.instruction}"
-            for step in obj.cooking_steps.all()
+            for step in obj.steps.all()
         ]
     
     def to_representation(self, instance):
@@ -63,6 +51,18 @@ class RecipeReturnModelSerializer(serializers.ModelSerializer):
 
         return representation
     
+class IngredientInputSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Ingredient
+        fields = ['name', 'quantity', 'unit']
+
+class CookingStepInputSerializer(serializers.ModelSerializer):
+    step_number = serializers.IntegerField(source='number')
+
+    class Meta:
+        model = CookingStep
+        fields = ['step_number', 'instruction']
+
 class RecipeInputQuerySerializer(serializers.ModelSerializer):
     ingredients = IngredientInputSerializer(many=True)
     steps = CookingStepInputSerializer(many=True)
@@ -74,11 +74,21 @@ class RecipeInputQuerySerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         # Assign the owner (request.user) to the post before saving
         user = self.context['request'].user
+        type = self.context['type']
+        flags = 0
+
+        if type == "breakfast":
+            flags = flags + RecipeFlags.IS_BREAKFAST
+        elif type == "lunch":
+            flags = flags + RecipeFlags.IS_LUNCH
+        elif type == "dinner":
+            flags = flags + RecipeFlags.IS_DINNER
+
         ingredients_data = validated_data.pop('ingredients')
         steps_data = validated_data.pop('steps')
         
         # Create the Recipe instance
-        recipe = Recipe.objects.create(owner=user, **validated_data)
+        recipe = Recipe.objects.create(owner=user, flags=flags, **validated_data)
 
         # Create related ingredients
         for ingredient_data in ingredients_data:
@@ -89,19 +99,3 @@ class RecipeInputQuerySerializer(serializers.ModelSerializer):
             CookingStep.objects.create(recipeId=recipe, **step_data)
 
         return recipe
-
-class QuestionSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Question
-        fields = ['question']
-
-class AnswerSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Answer
-        fields = ['questionId', 'answer']
-
-    def create(self, validated_data):
-        # Assign the owner (request.user) to the post before saving
-        user = self.context['request'].user
-        post = Answer.objects.create(userId=user, **validated_data)
-        return post
