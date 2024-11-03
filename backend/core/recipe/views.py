@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
 from rest_framework.views import APIView
@@ -42,6 +44,27 @@ class RecipeView(APIView):
 class NewRecipeView(APIView):
     permission_classes = [IsAuthenticated]
 
+    def get(self, request, type):
+        if type not in ["breakfast", "lunch", "dinner"]:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        ai = GeminiAPI()
+
+        # I'm sorry for this
+        # But sometimes it fails
+        tries = 0
+        while tries < 5:
+            result = ai.send_recipe_prompt(f"Give me a {type} recipe")
+            serializer = RecipeInputQuerySerializer(data=json.loads(result), context={'request': request, 'type': type})
+            if serializer.is_valid():
+                recipe = serializer.save()
+                output = RecipeReturnModelSerializer(recipe, context={'request': request})
+
+                return Response(output.data)
+            tries += 1
+        
+        return Response(["JSON parsing failed with error: ", serializer.errors, result.split("\n")], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
     def post(self, request, type):
         if type not in ["breakfast", "lunch", "dinner"]:
             return Response(status=status.HTTP_404_NOT_FOUND)
@@ -53,17 +76,6 @@ class NewRecipeView(APIView):
             return Response(serializer.data)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
-        
-class GenerateRecipeView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        ai = GeminiAPI()
-        # TODO: build one from user data and ansswers
-        prompt = "Give me a popular dinner recipe for Finland, with detailed steps. Explain in a kind and friendly manner, like you are a mother."
-        result = ai.send_prompt(prompt)
-
-        return Response({"request": prompt, "response": result.split('\n')})
     
 class IngredientsView(APIView):
     permission_classes = [IsAuthenticated]

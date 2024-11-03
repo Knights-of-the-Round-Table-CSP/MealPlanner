@@ -20,7 +20,7 @@ class AnswerSerializer(serializers.ModelSerializer):
 class AnswerReturnModelSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = ['id', 'answer']
+        fields = ['id', 'userId', 'answer']
     
 class QuestionsReturnModelSerializer(serializers.ModelSerializer):
     answers = serializers.SerializerMethodField()

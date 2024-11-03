@@ -14,7 +14,7 @@ class Ingredient(models.Model):
     recipeId = models.ForeignKey(Recipe, related_name='ingredients', on_delete=models.CASCADE)
     name = models.CharField(max_length=50)
     quantity = models.FloatField()
-    unit = models.CharField(max_length=50)
+    unit = models.CharField(max_length=50, blank=True)
 
 class CookingStep(models.Model):
     id = models.AutoField(primary_key=True)

@@ -4,10 +4,9 @@ from .qa.views import *
 from .recipe.views import *
 
 urlpatterns = [
-    path('recipe/<str:type>', NewRecipeView.as_view(), name='new_recipe'),
+    path('new-recipe/<str:type>', NewRecipeView.as_view(), name='new_recipe'),
     path('recipes/', RecipesView.as_view(), name='recipes'),
     path('recipes/<int:pk>', RecipeView.as_view(), name='recipe'),
-    path('recipes/generate/', GenerateRecipeView.as_view(), name='generate recipe'),
 
     path('ingredients/', IngredientsView.as_view(), name='ingredients'),
     path('ingredients/<int:pk>', IngredientView.as_view(), name='ingredient'),
