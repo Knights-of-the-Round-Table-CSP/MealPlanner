@@ -12,10 +12,10 @@ class QuestionsView(APIView):
     serializer_class = QuestionSerializer
 
     def get(self, request):
-        questions = [ {"id": question.id, "question": question.question} 
-        for question in Question.objects.all()]
-        
-        return Response(questions)
+        questions = Question.objects.all()
+        serializer = QuestionsReturnModelSerializer(questions, many=True, context={'request': request})
+
+        return Response(serializer.data)
     
     def post(self, request):
         serializer = QuestionSerializer(data=request.data)
