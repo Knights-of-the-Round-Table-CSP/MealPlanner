@@ -16,6 +16,18 @@ class QuestionsApiService {
 
     return this.api.post('api/questions/', data)
   }
+
+  change(id, question) {
+    let data = {
+      question: question 
+    }
+
+    return this.api.put(`api/questions/${id}`, data)
+  }
+
+  delete(id) {
+    return this.api.delete(`api/questions/${id}`)
+  }
 }
 
 // Export an instance of the QuestionsApiService

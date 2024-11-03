@@ -14,38 +14,15 @@ const RecipePage = () => {
   const navigate = useNavigate();
 
   const fetchRecipeData = async () => {
-    try {
-      console.log("Fetching recipe data from the secondary source...");
-      const response = await recipeApi.listUserRecipes(); // Try fetching from the secondary source
-      const allRecipes = await response.json();
-      const foundRecipe = allRecipes.find(r => r.id === parseInt(recipeId));
-
-      if (foundRecipe) {
-        setRecipe(foundRecipe);
-      } else {
-        throw new Error('Recipe not found in the secondary source.'); // Throw an error to trigger the fallback
-      }
-    } catch (error) {
-      console.error('Error fetching from secondary source:', error.message);
-      // Fallback to primary source if the secondary source fails
-      try {
-        console.log("Fetching recipe data from the primary source...");
-        const response = await fetch('/demoFiles/allRecipe.json');
-        const allRecipes = await response.json();
-        const foundRecipe = allRecipes.find(r => r.id === parseInt(recipeId));
-
-        if (foundRecipe) {
-          setRecipe(foundRecipe);
-        } else {
-          setError('Recipe not found in the primary source.');
-        }
-      } catch (error) {
-        console.error('Error fetching from primary source:', error.message);
-        setError('Error fetching recipe data from both sources.');
-      }
-    } finally {
-      setLoading(false);
-    }
+    recipeApi.getRecipe(recipeId)
+      .then((response) => {
+        setRecipe(response.data);
+      })
+      .catch((error) => {
+        console.error('Error fetching recipe:', error.message);
+        setError('Error fetching recipe.');
+      })
+      .finally(() => setLoading(false));
   };
 
   // Initial load of recipe data
@@ -63,9 +40,9 @@ const RecipePage = () => {
     setLlmLoading(true);
     setLlmResponse('');
 
-    const prompt = recipe.isShort
-      ? `Expand the recipe: ${recipe.recipeName}. Ingredients: ${recipe.ingredients.join(', ')}. Steps: ${recipe.steps.join(', ')}`
-      : `Minimize the recipe: ${recipe.recipeName}. Ingredients: ${recipe.ingredients.join(', ')}. Steps: ${recipe.steps.join(', ')}`;
+    const prompt = recipe.isLong
+      ? `Minimize the recipe: ${recipe.name}. Ingredients: ${recipe.ingredients.join(', ')}. Steps: ${recipe.steps.join(', ')}`
+      : `Expand the recipe: ${recipe.name}. Ingredients: ${recipe.ingredients.join(', ')}. Steps: ${recipe.steps.join(', ')}`;
 
     console.log("Prompt sent to LLM:", prompt);
 
@@ -92,7 +69,7 @@ const RecipePage = () => {
   return (
     <div className="full-screen">
       <div className="content-container">
-        <h1>{recipe.recipeName}</h1>
+        <h1>{recipe.name}</h1>
         <h2>Ingredients</h2>
         <ul>
           {recipe.ingredients.map((ingredient, index) => (
@@ -109,7 +86,7 @@ const RecipePage = () => {
         </ol>
         <div style={{ display: 'flex', gap: '10px' }}>
           <button onClick={handleToggleRecipe}>
-            {recipe.isShort ? 'Maximize' : 'Minimize'}
+            {recipe.isLong ? 'Minimize' : 'Maximize'}
           </button>
           <button onClick={handleGoBack}>Go Back</button>
         </div>

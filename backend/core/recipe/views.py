@@ -19,7 +19,7 @@ class RecipesView(APIView):
 
     def get(self, request):
         recipes = Recipe.objects.filter(owner=request.user)
-        serializer = RecipeSerializer(recipes, many=True)
+        serializer = RecipeReturnModelSerializer(recipes, many=True, context={'request': request})
 
         return Response(serializer.data)
 
@@ -40,6 +40,12 @@ class RecipeView(APIView):
         serializer = RecipeReturnModelSerializer(recipe, context={'request': request})
 
         return Response(serializer.data)
+    
+    def delete(self, request, pk):
+        instance = get_object_or_404(Recipe, pk=pk)
+        instance.delete()
+        
+        return Response({"message": "Item deleted successfully"})
     
 class NewRecipeView(APIView):
     permission_classes = [IsAuthenticated]

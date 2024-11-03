@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import answersApiService from '../utils/answerApi';
 import aiApiService from '../utils/aiApi';
 import '../static/gridView.css';
+import recipeApi from '../utils/recipeApi';
 
 const PromptPage = () => {
   const { userId } = useParams();
@@ -17,12 +18,17 @@ const PromptPage = () => {
   const [lunchData, setLunchData] = useState([]);
   const [dinnerData, setDinnerData] = useState([]);
 
+  useEffect(() => {
+    console.log(lunchData);
+  }, [lunchData])
+
   // Fetch data from allRecipes.json
   useEffect(() => {
     const fetchMealData = async () => {
       try {
-        const allRecipes = await fetch('/demoFiles/allRecipe.json').then(res => res.json());
-
+        // const allRecipes = await fetch('/demoFiles/allRecipe.json').then(res => res.json());
+        const allRecipes = (await recipeApi.listUserRecipes()).data;
+        
         // Categorize recipes into breakfast, lunch, and dinner
         const breakfast = allRecipes.filter(recipe => recipe.isBreakfast);
         const lunch = allRecipes.filter(recipe => recipe.isLunch);
@@ -106,54 +112,52 @@ const PromptPage = () => {
   };
 
   // Function to handle recipe deletion
-  const handleDelete = async (recipeId) => {
+  const handleDelete = async (recipeId, type) => {
     console.log(`Deleting recipe with ID: ${recipeId}`);
-    
-    // Prepare user answers for API call
-    // will delete from DB
-    const userAnswersArray = userAnswers.reduce((acc, entry) => {
-      if (entry.userId === userId) {
-          return [...acc, ...entry.answers];
-      }
-      return acc;
-    }, []);
-
-    // Send LLM request with null prompt and user answers
-    const payload = {
-      message: 'sorry',
-      userAnswers: userAnswersArray
-    };
-
-    console.log(payload)
 
     try {
-      const response = await aiApiService.generateResponse(payload);
-      console.log('LLM Response after deletion:', response.data);
-      
-      // Optionally handle the response here if needed
-      if (response.data.response) {
-        // Update the outputData or handle the response as required
-        setOutputData(prev => [...prev, response.data.response]); // Append the response to outputData
-      }
+      await recipeApi.deleteRecipe(recipeId);
 
+      switch (type) {
+        case "breakfast":
+          let breakfast = (await recipeApi.generateNewRecipe(type)).data;
+          setBreakfastData(prevData => [
+            ...prevData.filter(recipe => recipe.id !== recipeId),
+            breakfast
+          ])
+          break;
+        case "dinner":
+          let dinner = (await recipeApi.generateNewRecipe(type)).data;
+          setDinnerData(prevData => [
+            ...prevData.filter(recipe => recipe.id !== recipeId),
+            dinner
+          ])
+          break;
+        case "lunch":
+          let lunch = (await recipeApi.generateNewRecipe(type)).data;
+          setLunchData(prevData => [
+            ...prevData.filter(recipe => recipe.id !== recipeId),
+            lunch
+          ])
+          break;
+        default:
+          setError("Unknown recipe type " + type);
+          break;
+      }
+      
     } catch (error) {
       setError(error.response ? error.response.data.message : error.message);
     }
-
-    // Update the UI to remove the deleted recipe
-    setBreakfastData(breakfastData.filter(recipe => recipe.id !== recipeId));
-    setLunchData(lunchData.filter(recipe => recipe.id !== recipeId));
-    setDinnerData(dinnerData.filter(recipe => recipe.id !== recipeId));
   };
 
   // Function to render recipe items
-  const renderRecipeItem = (recipe) => (
+  const renderRecipeItem = (recipe, type) => (
     <div key={recipe.id} className="grid-item">
-      <h3>{recipe.recipeName}</h3>
+      <h3>{recipe.name}</h3>
       <p><strong>Ingredients:</strong> {recipe.ingredients.join(', ')}</p>
       <div className="recipe-buttons">
         <button style={{ gap: '10px' }} onClick={() => handleExpand(recipe.id)}>Expand</button>
-        <button style={{ gap: '10px' }} onClick={() => handleDelete(recipe.id)}>Delete</button>
+        <button style={{ gap: '10px' }} onClick={() => handleDelete(recipe.id, type)}>Delete</button>
       </div>
     </div>
   );
@@ -219,21 +223,21 @@ return (
         <div>
           <h2 className="grid-row-title">Breakfast</h2>
           <div className="grid-row">
-            {breakfastData.length > 0 ? breakfastData.map(renderRecipeItem) : <p>No data available</p>}
+            {breakfastData.length > 0 ? breakfastData.map(b => renderRecipeItem(b, "breakfast")) : <p>No data available</p>}
           </div>
         </div>
 
         <div>
           <h2 className="grid-row-title">Lunch</h2>
           <div className="grid-row">
-            {lunchData.length > 0 ? lunchData.map(renderRecipeItem) : <p>No data available</p>}
+            {lunchData.length > 0 ? lunchData.map(b => renderRecipeItem(b, "lunch")) : <p>No data available</p>}
           </div>
         </div>
 
         <div>
           <h2 className="grid-row-title">Dinner</h2>
           <div className="grid-row">
-            {dinnerData.length > 0 ? dinnerData.map(renderRecipeItem) : <p>No data available</p>}
+            {dinnerData.length > 0 ? dinnerData.map(b => renderRecipeItem(b, "dinner"))  : <p>No data available</p>}
           </div>
         </div>
       </div>
