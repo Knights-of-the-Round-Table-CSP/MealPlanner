@@ -116,11 +116,10 @@ const PromptPage = () => {
     console.log(`Deleting recipe with ID: ${recipeId}`);
 
     try {
-      await recipeApi.deleteRecipe(recipeId);
-
       switch (type) {
         case "breakfast":
           let breakfast = (await recipeApi.generateNewRecipe(type)).data;
+          await recipeApi.deleteRecipe(recipeId);
           setBreakfastData(prevData => [
             ...prevData.filter(recipe => recipe.id !== recipeId),
             breakfast
@@ -128,6 +127,7 @@ const PromptPage = () => {
           break;
         case "dinner":
           let dinner = (await recipeApi.generateNewRecipe(type)).data;
+          await recipeApi.deleteRecipe(recipeId);
           setDinnerData(prevData => [
             ...prevData.filter(recipe => recipe.id !== recipeId),
             dinner
@@ -135,6 +135,7 @@ const PromptPage = () => {
           break;
         case "lunch":
           let lunch = (await recipeApi.generateNewRecipe(type)).data;
+          await recipeApi.deleteRecipe(recipeId);
           setLunchData(prevData => [
             ...prevData.filter(recipe => recipe.id !== recipeId),
             lunch
@@ -144,7 +145,7 @@ const PromptPage = () => {
           setError("Unknown recipe type " + type);
           break;
       }
-      
+
     } catch (error) {
       setError(error.response ? error.response.data.message : error.message);
     }

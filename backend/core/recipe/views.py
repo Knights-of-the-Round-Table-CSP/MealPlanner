@@ -55,12 +55,34 @@ class NewRecipeView(APIView):
             return Response(status=status.HTTP_404_NOT_FOUND)
         
         ai = GeminiAPI()
+        flag = 0
+
+        if type == "breakfast":
+            flag = flag + RecipeFlags.IS_BREAKFAST
+        elif type == "lunch":
+            flag = flag + RecipeFlags.IS_LUNCH
+        elif type == "dinner":
+            flag = flag + RecipeFlags.IS_DINNER
+
+        existing_recipes = [ recipe.name
+            for recipe in Recipe.objects
+                .filter(owner=request.user)
+                .extra(
+                    where=["flags & %s != 0"],
+                    params=[flag]
+                )
+        ]
+        prompt = f"Give me a {type} recipe. But"
+        for name in existing_recipes:
+            prompt += " not " + name + ","
+
+        print("PROMPT: ", prompt)
 
         # I'm sorry for this
         # But sometimes it fails
         tries = 0
         while tries < 5:
-            result = ai.send_recipe_prompt(f"Give me a {type} recipe")
+            result = ai.send_recipe_prompt(prompt)
             serializer = RecipeInputQuerySerializer(data=json.loads(result), context={'request': request, 'type': type})
             if serializer.is_valid():
                 recipe = serializer.save()
