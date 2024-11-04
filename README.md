@@ -9,3 +9,6 @@ Week 1 Update:
   - registration, log in, token authentication
   - database and some models
   - basics for the recipe handling
+
+Week 3 Update:
+- Tuning of LLM to serve right kinds of recommendations.
