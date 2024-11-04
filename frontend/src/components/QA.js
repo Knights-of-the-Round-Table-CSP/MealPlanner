@@ -1,4 +1,3 @@
-// QAPage.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import '../static/qa.css';
@@ -25,30 +24,33 @@ const QAPage = () => {
     const handleSubmit = (e, questionId) => {
         e.preventDefault();
         if (questionId && newAnswers[questionId]) {
-            const answerObject = { questionId, answer: newAnswers[questionId] };
+            const answerObject = { questionId, answer: newAnswers[questionId], userId: id };
             answersApiService.addUserAnswer(answerObject)
                 .then(() => {
-                    setUserAnswers(prev => [...prev, { userId: id, questionId, answer: newAnswers[questionId] }]);
+                    setUserAnswers(prev => [...prev, answerObject]);
                     setNewAnswers(prev => ({ ...prev, [questionId]: '' }));
                 })
                 .catch(error => console.error('Error submitting answer:', error.message));
         }
     };
 
-    const unansweredQuestions = questions.filter(question => 
-        !userAnswers.some(answer => answer.questionId === question.id && answer.userId === id)
-    );
-
     return (
         <div>
             <h1>Q&A Page for User {id}</h1>
-            {unansweredQuestions.length > 0 ? (
-                <div class = "qa-container">
-                    <h2>Unanswered Questions:</h2>
-                    <ul>
-                        {unansweredQuestions.map((question) => (
+            <div className="qa-container">
+                <h2>All Questions:</h2>
+                <ul>
+                    {questions.map((question) => {
+                        // Get all answers for this question
+                        const allAnswers = userAnswers.filter(answer => answer.questionId === question.id);
+                        return (
                             <li key={question.id}>
                                 {question.question}
+                                <ul>
+                                    {allAnswers.map((answer, index) => (
+                                        <li key={answer.id}>Answer {index + 1}: {answer.answer}</li>
+                                    ))}
+                                </ul>
                                 <form onSubmit={(e) => handleSubmit(e, question.id)}>
                                     <input
                                         type="text"
@@ -56,29 +58,13 @@ const QAPage = () => {
                                         onChange={(e) => setNewAnswers(prev => ({ ...prev, [question.id]: e.target.value }))}
                                         placeholder="Type your answer here"
                                     />
-                                    <br></br>
                                     <button type="submit">Submit Answer</button>
                                 </form>
                             </li>
-                        ))}
-                    </ul>
-                </div>
-            ) : (
-                <div class = "qa-container">
-                    <h2>All Questions (Answered):</h2>
-                    <ul>
-                        {questions.map((question) => {
-                            const userAnswer = userAnswers.find(answer => answer.questionId === question.id && answer.userId === id);
-                            return (
-                                <li key={question.id}>
-                                    {question.question}
-                                    {userAnswer && <p>Answer: {userAnswer.answer}</p>}
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-            )}
+                        );
+                    })}
+                </ul>
+            </div>
         </div>
     );
 };

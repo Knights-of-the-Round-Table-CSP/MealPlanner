@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import userApiService from '../utils/userApi';
 import { useUser } from '../context/UserContext'; 
+import '../static/userProfile.css';
 
 const UserProfile = () => {
     const navigate = useNavigate();
@@ -34,7 +35,7 @@ const UserProfile = () => {
     }, [userId]); 
 
     const renderError = (errorMessage) => (
-        <div>
+        <div className="error-container">
             <h1>Error</h1>
             <p>{errorMessage}</p>
             <button onClick={() => navigate(`/qa/${userId}`)}>Go to Q&A Page</button>
@@ -42,8 +43,7 @@ const UserProfile = () => {
     );
 
     const renderUserProfile = (user) => (
-        <div>
-            <h1>User Profile</h1>
+        <div className="user-profile-content">
             {user.email ? (
                 <>
                     <p><strong>Email:</strong> {user.email}</p>
@@ -58,14 +58,19 @@ const UserProfile = () => {
     );
 
     if (loading) {
-        return <p>Loading...</p>; // Show loading message
+        return <div className="loading-container">Loading...</div>; // Show loading message
     }
 
     if (error) {
         return renderError(error); // Render error if there is one
     }
 
-    return renderUserProfile(user); // Render user profile
+    return (
+        <div className="user-profile-container">
+            <h1 className="profile-title">My Profile</h1>
+            {renderUserProfile(user)} {/* Render user profile content */}
+        </div>
+    ); 
 };
 
 export default UserProfile;

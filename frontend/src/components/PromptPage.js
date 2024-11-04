@@ -168,6 +168,35 @@ const PromptPage = () => {
     navigate(`/recipe/${recipeId}`); // Assuming your route is set up to handle this
   };
 
+  const myfunction = async (recipeName) => {
+    try {
+        let newRecipe;
+
+        switch (recipeName) {
+            case "breakfast":
+                newRecipe = (await recipeApi.generateNewRecipe("breakfast")).data;
+                setBreakfastData(prevData => [...prevData, newRecipe]); // Append the new recipe
+                break;
+
+            case "lunch":
+                newRecipe = (await recipeApi.generateNewRecipe("lunch")).data;
+                setLunchData(prevData => [...prevData, newRecipe]); // Append the new recipe
+                break;
+
+            case "dinner":
+                newRecipe = (await recipeApi.generateNewRecipe("dinner")).data;
+                setDinnerData(prevData => [...prevData, newRecipe]); // Append the new recipe
+                break;
+
+            default:
+                setError("Unknown recipe type: " + recipeName);
+                break;
+        }
+    } catch (error) {
+        setError(error.response ? error.response.data.message : error.message);
+    }
+};
+
   
 return (
   <div className="prompt-page-container">
@@ -221,18 +250,30 @@ return (
       {/* Grid View Section */}
       <h2>Your Recipes:</h2>
       <div className="grid-container">
-        <div>
-          <h2 className="grid-row-title">Breakfast</h2>
-          <div className="grid-row">
-            {breakfastData.length > 0 ? breakfastData.map(b => renderRecipeItem(b, "breakfast")) : <p>No data available</p>}
-          </div>
-        </div>
+      <div>
+    <div className="grid-row-header">  {/* Added this wrapper for Flexbox */}
+      <h2 className="grid-row-title">Breakfast</h2> <br></br><br></br>
+    </div>
+    <div className="grid-row">
+      {breakfastData.length > 0 ? breakfastData.map(b => renderRecipeItem(b, "breakfast")) : <p>No data available</p>}
+    </div>
+      <br></br>
+      <div className = "recipe-request">
+      <h3>Want a breakfast recipe?</h3>
+      <button className="grid-row-button" onClick={() => myfunction("breakfast")}>Click here!</button>
+      </div>
+  </div>
 
         <div>
           <h2 className="grid-row-title">Lunch</h2>
           <div className="grid-row">
             {lunchData.length > 0 ? lunchData.map(b => renderRecipeItem(b, "lunch")) : <p>No data available</p>}
           </div>
+          <br></br>
+      <div className = "recipe-request">
+      <h3>Want a lunch recipe?</h3>
+      <button className="grid-row-button" onClick={() => myfunction("lunch")}>Click here!</button>
+      </div>
         </div>
 
         <div>
@@ -240,6 +281,11 @@ return (
           <div className="grid-row">
             {dinnerData.length > 0 ? dinnerData.map(b => renderRecipeItem(b, "dinner"))  : <p>No data available</p>}
           </div>
+          <br></br>
+      <div className = "recipe-request">
+      <h3>Want a dinner recipe?</h3>
+      <button className="grid-row-button" onClick={() => myfunction("dinner")}>Click here!</button>
+      </div>
         </div>
       </div>
     </div>

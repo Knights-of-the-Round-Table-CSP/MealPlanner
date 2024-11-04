@@ -1,0 +1,35 @@
+body, html {
+    height: 100%;
+    margin: 0;
+}
+
+.user-profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    height: 100vh;
+    text-align: center;
+}
+
+.profile-title {
+    margin-top: 5%;
+    font-size: 2rem;
+}
+
+.user-profile-content {
+    margin-top: 30px;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+}
+
+.error-container {
+    color: red;
+}
+
+.loading-container {
+    font-size: 20px;
+}

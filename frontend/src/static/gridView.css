@@ -120,3 +120,39 @@
 .error-message {
   color: red;
 }
+
+.grid-row-header {
+  display: flex;               /* Use Flexbox to align children */
+  align-items: center;        /* Center the items vertically */
+  gap: 10px;                  /* Space between title and button */
+}
+
+.grid-row-title {
+  font-size: 1.5rem;          /* Title font size */
+  font-weight: bold;          /* Bold title */
+  margin: 0;                  /* Remove default margin */
+}
+
+.grid-row-button {
+  
+  background-size: contain;   /* Scale to fit */
+  background-repeat: no-repeat; /* Prevent tiling */
+  background-position: center; /* Center the image */
+  width: 200px;                /* Width of the button */
+  height: 40px;               /* Height of the button */
+  background-color: transparent; /* Make background transparent */
+  border: none;               /* Remove border */
+  padding: 0;                 /* Remove padding */
+  cursor: pointer;            /* Pointer on hover */
+}
+.recipe-request {
+  display: flex;             /* Enable Flexbox for this section */
+  align-items: center;      /* Center items vertically */
+  gap: 10px;                /* Space between the heading and button */
+  margin-top: 10px;         /* Space above this section */
+}
+
+.recipe-request h3 {
+  margin: 0;                /* Remove default margin */
+  font-size: 1.2em;         /* Adjust font size as necessary */
+}
