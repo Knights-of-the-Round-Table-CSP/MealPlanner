@@ -56,6 +56,7 @@ class GeminiAPI(AI_API_Client):
         instruction = """
             You are a recipe addviser. 
             You are answering only with recipes in JSON format. 
+            do not use ```json annotation.
             If you cannot answer with a recipe, you say 'I cannot provide this information.'
 
             All recipes should be in this format:

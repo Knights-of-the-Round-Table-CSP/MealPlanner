@@ -5,6 +5,7 @@ from .recipe.views import *
 
 urlpatterns = [
     path('new-recipe/<str:type>', NewRecipeView.as_view(), name='new_recipe'),
+    path('change-detalization/<int:pk>', ChangeRecipeDetalizationView.as_view(), name='change_detalization'),
     path('recipes/', RecipesView.as_view(), name='recipes'),
     path('recipes/<int:pk>', RecipeView.as_view(), name='recipe'),
 

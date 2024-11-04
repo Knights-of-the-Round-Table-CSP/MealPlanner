@@ -104,6 +104,48 @@ class NewRecipeView(APIView):
             return Response(serializer.data)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class ChangeRecipeDetalizationView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, pk):
+        instance = get_object_or_404(Recipe, pk=pk)
+
+        if instance.flags & RecipeFlags.IS_BREAKFAST != 0:
+            type = "breakfast"
+        elif instance.flags & RecipeFlags.IS_LUNCH != 0:
+            type == "lunch"
+        elif instance.flags & RecipeFlags.IS_DINNER != 0:
+            type = "dinner"
+
+        isLong = instance.flags & RecipeFlags.IS_LONG != 0
+
+        serializer = RecipeInputQuerySerializer(instance, context={'request': request, 'type': type})
+        ai = GeminiAPI()
+
+        if isLong:
+            prompt = f"Make this recipe shorter. Avoid unnessesary details.\n"
+        else:
+            prompt = f"Make this recipe more detalised, add tips and details. I'm not good at cooking.\n"
+        prompt += json.dumps(serializer.data)
+
+        print("PROMPT: ", prompt)
+
+        # I'm sorry for this
+        # But sometimes it fails
+        tries = 0
+        while tries < 5:
+            result = ai.send_recipe_prompt(prompt)
+            print(result)
+            serializer = RecipeInputQuerySerializer(instance, data=json.loads(result))
+            if serializer.is_valid():
+                recipe = serializer.save()
+                output = RecipeReturnModelSerializer(recipe, context={'request': request})
+
+                return Response(output.data)
+            tries += 1
+        
+        return Response(["JSON parsing failed with error: ", serializer.errors, result.split("\n")], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
     
 class IngredientsView(APIView):
     permission_classes = [IsAuthenticated]

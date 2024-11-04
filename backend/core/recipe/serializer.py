@@ -99,3 +99,33 @@ class RecipeInputQuerySerializer(serializers.ModelSerializer):
             CookingStep.objects.create(recipeId=recipe, **step_data)
 
         return recipe
+    
+    def update(self, instance, validated_data):
+        # Update basic fields
+        instance.name = validated_data.get('name', instance.name)
+        instance.preparation_time = validated_data.get('preparation_time', instance.preparation_time)
+        instance.description = validated_data.get('description', instance.description)
+
+        flags = instance.flags
+
+        if instance.flags & RecipeFlags.IS_LONG == 0:
+            flags += RecipeFlags.IS_LONG
+        else:
+            flags -= RecipeFlags.IS_LONG
+        
+        instance.flags = flags
+        instance.save()
+
+        # Update ingredients
+        ingredients_data = validated_data.pop('ingredients', [])
+        instance.ingredients.all().delete()  # Delete existing ingredients
+        for ingredient_data in ingredients_data:
+            Ingredient.objects.create(recipeId=instance, **ingredient_data)  # Recreate ingredients
+
+        # Update cooking steps
+        steps_data = validated_data.pop('steps', [])
+        instance.steps.all().delete()  # Delete existing steps
+        for step_data in steps_data:
+            CookingStep.objects.create(recipeId=instance, **step_data)  # Recreate steps
+
+        return instance

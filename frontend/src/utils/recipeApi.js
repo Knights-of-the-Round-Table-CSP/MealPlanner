@@ -31,6 +31,10 @@ class RecipeApiService {
     return this.api.post(`api/new-recipe/${type}`, request)
   }
 
+  changeRecipeDetalization(id) {
+    return this.api.get(`api/change-detalization/${id}`)
+  }
+
   deleteRecipe(id) {
     return this.api.delete(`api/recipes/${id}`)
   }

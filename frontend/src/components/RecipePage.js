@@ -36,31 +36,10 @@ const RecipePage = () => {
 
   const handleToggleRecipe = async () => {
     if (!recipe) return;
-
-    setLlmLoading(true);
-    setLlmResponse('');
-
-    const prompt = recipe.isLong
-      ? `Minimize the recipe: ${recipe.name}. Ingredients: ${recipe.ingredients.join(', ')}. Steps: ${recipe.steps.join(', ')}`
-      : `Expand the recipe: ${recipe.name}. Ingredients: ${recipe.ingredients.join(', ')}. Steps: ${recipe.steps.join(', ')}`;
-
-    console.log("Prompt sent to LLM:", prompt);
-
-    try {
-      const response = await aiApiService.generateResponse({ message: prompt });
-      if (response.data && response.data.response) {
-        setLlmResponse(response.data.response);
-      } else {
-        setLlmResponse('Failed to fetch LLM response.');
-      }
-      console.log("after receiving LLM response");
-      await fetchRecipeData(); // Reload the recipe data on toggle
-    } catch (error) {
-      console.error('Error fetching LLM response:', error);
-      setLlmResponse(error.response ? error.response.data.message : error.message);
-    } finally {
-      setLlmLoading(false);
-    }
+    
+    recipeApi.changeRecipeDetalization(recipe.id)
+      .then(response => setRecipe(response.data))
+      .catch(error => console.log("Error on changing recipe detalization: ", error))
   };
 
   if (loading) return <p>Loading...</p>;
