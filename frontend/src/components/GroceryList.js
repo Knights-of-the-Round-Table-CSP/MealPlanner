@@ -50,33 +50,35 @@ function GroceryListGenerator() {
     };
 
     return (
-        <div className='groceryListContainer'>
-            <h2>Grocery List Generation</h2>
-            <br /><br />
-            <input
-                type="file"
-                onChange={handleFileChange}
-                accept="image/*"
-                key={selectedFile ? selectedFile.name : ""}
-            />
-            <input
-                type="text"
-                placeholder="Enter some instructions if required"
-                value={prompt}
-                onChange={handlePromptChange}
-            />
-            <button onClick={handleSubmit}>Scan Food</button>
+        <div class="box">
+            <div className='groceryListContainer'>
+                <h2>Grocery List Generation</h2>
+                <br /><br />
+                <input
+                    type="file"
+                    onChange={handleFileChange}
+                    accept="image/*"
+                    key={selectedFile ? selectedFile.name : ""}
+                />
+                <input
+                    type="text"
+                    placeholder="Enter some instructions if required"
+                    value={prompt}
+                    onChange={handlePromptChange}
+                />
+                <button onClick={handleSubmit}>Scan Food</button>
 
-            {/* Display error message if image is missing */}
-            {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
+                {/* Display error message if image is missing */}
+                {error && <div style={{ color: 'red', marginTop: '10px' }}>{error}</div>}
 
-            {response && (
-                <div>
-                    <br /><br />
-                    <h2>Grocery List</h2>
-                    <p>{response}</p>
-                </div>
-            )}
+                {response && (
+                    <div>
+                        <br /><br />
+                        <h2>Grocery List</h2>
+                        <p>{response}</p>
+                    </div>
+                )}
+            </div>
         </div>
     );
 }

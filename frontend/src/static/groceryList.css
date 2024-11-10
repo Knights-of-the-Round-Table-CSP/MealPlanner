@@ -1,13 +1,5 @@
-/* Apply some basic reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-/* This ensures the container is full-screen */
-body, html {
-    height: 100%;
+.box {
+    min-height: 100vh; /* Full viewport height */
     display: flex;
     justify-content: center;
     align-items: center;
