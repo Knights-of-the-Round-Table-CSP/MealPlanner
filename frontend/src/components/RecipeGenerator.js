@@ -32,11 +32,6 @@ function RecipeGenerator() {
         // Clear previous errors
         setError("");
 
-        if (!selectedFile) {
-            setError("Please provide an image.");
-            return; // Do not proceed if no image is provided
-        }
-
         recipeApi.generateNewRecipeFromPicture(type, selectedFile, prompt)
             .then(response => {
                 if(!response){

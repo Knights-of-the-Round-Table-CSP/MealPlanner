@@ -20,7 +20,8 @@ class RecipeApiService {
 
   generateNewRecipeFromPicture(type, image, prompt) {
     const formData = new FormData();
-    formData.append("file", image);
+    if (image)
+      formData.append("file", image);
     formData.append("prompt", prompt);
 
     return this.api.post(`api/new-recipe-pic/${type}`, formData, {

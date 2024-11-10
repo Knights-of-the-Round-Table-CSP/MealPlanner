@@ -131,5 +131,5 @@ class RecipeInputQuerySerializer(serializers.ModelSerializer):
         return instance
 
 class GenerateNewRecipeFromPictureRequestSerializer(serializers.Serializer):
-    file = serializers.FileField()
+    file = serializers.FileField(required=False)
     prompt = serializers.CharField(allow_blank=True)

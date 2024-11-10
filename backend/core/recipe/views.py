@@ -125,9 +125,13 @@ class NewRecipeFromFileView(APIView):
         serializer = GenerateNewRecipeFromPictureRequestSerializer(data=request.data)
 
         if serializer.is_valid():
-            file = serializer.validated_data['file']
+            path = ""
+            if 'file' in serializer.validated_data:
+                file = serializer.validated_data['file']
+                print(file)
+                path = getPath(file)
+
             user_input = serializer.validated_data['prompt']
-            path = getPath(file)
             ai = GeminiAPI()
             flag = 0
 
@@ -158,13 +162,19 @@ class NewRecipeFromFileView(APIView):
             # But sometimes it fails
             tries = 0
             while tries < 5:
-                result = ai.send_recipe_picture_prompt(prompt, path)
+                if len(path) > 0:
+                    result = ai.send_recipe_picture_prompt(prompt, path)
+                else:
+                    result = ai.send_recipe_prompt(prompt)
+
                 serializer = RecipeInputQuerySerializer(data=json.loads(result), context={'request': request, 'type': type})
+
                 if serializer.is_valid():
                     recipe = serializer.save()
                     output = RecipeReturnModelSerializer(recipe, context={'request': request})
 
                     return Response(output.data)
+                
                 tries += 1
             
             return Response(["JSON parsing failed with error: ", serializer.errors, result.split("\n")], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
