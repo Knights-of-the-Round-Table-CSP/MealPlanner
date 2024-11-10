@@ -9,23 +9,27 @@ import RecipePage from './components/RecipePage';
 import NavBar from './components/NavBar';
 import UserProfile from './components/UserProfilePage';
 import Footer from './components/Footer';
-import GroceryListGenerator from './components/GroceryList';
+import RecipeGenerator from './components/RecipeGenerator';
+
+import './App.css'
 
 function App() {
   return (
     <UserProvider> {/* Wrap Routes with UserProvider */}
       <NavBar /> {/* Place NavBar at the top, outside of Routes */}
       <Footer /> {/* Add Footer here */}
-      <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/login" element={<LoginForm onLoginSuccess={() => console.log('Logged in successfully')} />} />
-        <Route path="/signup" element={<SignupForm />} />
-        <Route path="/qa/:id" element={<QApage />} />
-        <Route path="/prompt/:userId" element={<PromptPage />} />
-        <Route path="/recipe/:recipeId" element={<RecipePage />} />
-        <Route path="/userProfile/:userId" element={<UserProfile />} /> {/* User profile with dynamic ID */}
-        <Route path="/groceryList" element={<GroceryListGenerator />} />
-      </Routes>
+      <div className='main'>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<LoginForm onLoginSuccess={() => console.log('Logged in successfully')} />} />
+          <Route path="/signup" element={<SignupForm />} />
+          <Route path="/qa/:id" element={<QApage />} />
+          <Route path="/prompt/:userId" element={<PromptPage />} />
+          <Route path="/recipe/:recipeId" element={<RecipePage />} />
+          <Route path="/userProfile/:userId" element={<UserProfile />} /> {/* User profile with dynamic ID */}
+          <Route path="/newRecipe/:type" element={<RecipeGenerator />} />
+        </Routes>
+      </div>
     </UserProvider>
   );
 }

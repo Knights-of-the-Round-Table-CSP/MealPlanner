@@ -126,6 +126,7 @@ class NewRecipeFromFileView(APIView):
 
         if serializer.is_valid():
             file = serializer.validated_data['file']
+            user_input = serializer.validated_data['prompt']
             path = getPath(file)
             ai = GeminiAPI()
             flag = 0
@@ -145,7 +146,9 @@ class NewRecipeFromFileView(APIView):
                         params=[flag]
                     )
             ]
-            prompt = f"Give me a {type} recipe. But"
+            prompt = f"Give me a {type} recipe. "
+            prompt += f"Special instructions are: " + user_input + ". "
+            prompt += "But"
             for name in existing_recipes:
                 prompt += " not " + name + ","
 
@@ -177,7 +180,7 @@ class ChangeRecipeDetalizationView(APIView):
         if instance.flags & RecipeFlags.IS_BREAKFAST != 0:
             type = "breakfast"
         elif instance.flags & RecipeFlags.IS_LUNCH != 0:
-            type == "lunch"
+            type = "lunch"
         elif instance.flags & RecipeFlags.IS_DINNER != 0:
             type = "dinner"
 

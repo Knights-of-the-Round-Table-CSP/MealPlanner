@@ -18,9 +18,10 @@ class RecipeApiService {
     return this.api.get(`api/new-recipe/${type}`)
   }
 
-  generateNewRecipeFromPicture(type, image) {
+  generateNewRecipeFromPicture(type, image, prompt) {
     const formData = new FormData();
     formData.append("file", image);
+    formData.append("prompt", prompt);
 
     return this.api.post(`api/new-recipe-pic/${type}`, formData, {
       headers: {

@@ -253,8 +253,9 @@ return (
     </div>
       <br></br>
       <div className = "recipe-request">
-      <h3>Want a breakfast recipe?</h3>
-      <button className="grid-row-button" onClick={() => myfunction("breakfast")}>Click here!</button>
+        <h3>Want a breakfast recipe?</h3>
+        <button className="grid-row-button" onClick={() => myfunction("breakfast")}>Generate recipe</button>
+        <button className="grid-row-button" onClick={() => navigate("/newRecipe/breakfast")}>Parameters</button>
       </div>
   </div>
 
@@ -265,8 +266,9 @@ return (
           </div>
           <br></br>
       <div className = "recipe-request">
-      <h3>Want a lunch recipe?</h3>
-      <button className="grid-row-button" onClick={() => myfunction("lunch")}>Click here!</button>
+        <h3>Want a lunch recipe?</h3>
+        <button className="grid-row-button" onClick={() => myfunction("lunch")}>Generate recipe</button>
+        <button className="grid-row-button" onClick={() => navigate("/newRecipe/lunch")}>Parameters</button>
       </div>
         </div>
 
@@ -277,8 +279,9 @@ return (
           </div>
           <br></br>
       <div className = "recipe-request">
-      <h3>Want a dinner recipe?</h3>
-      <button className="grid-row-button" onClick={() => myfunction("dinner")}>Click here!</button>
+        <h3>Want a dinner recipe?</h3>
+        <button className="grid-row-button" onClick={() => myfunction("dinner")}>Generate recipe</button>
+        <button className="grid-row-button" onClick={() => navigate("/newRecipe/dinner")}>Parameters</button>
       </div>
         </div>
       </div>

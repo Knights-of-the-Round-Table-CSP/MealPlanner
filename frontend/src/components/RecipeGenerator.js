@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import '../static/groceryList.css'; 
+import { useParams, useNavigate } from 'react-router-dom';
+import '../static/recipeGenerator.css'; 
 import recipeApi from '../utils/recipeApi';
 
 async function mockAxiosPost(url, data, config) {
@@ -11,9 +11,9 @@ async function mockAxiosPost(url, data, config) {
     });
 }
 
-function GroceryListGenerator() {
+function RecipeGenerator() {
+    const { type } = useParams();
     const [selectedFile, setSelectedFile] = useState(null);
-    const [selectedRecipeType, setSelectedRecipeType] = useState('breakfast');
     const [prompt, setPrompt] = useState("");
     const [response, setResponse] = useState("");
     const [error, setError] = useState(""); // Track form validation errors
@@ -23,10 +23,6 @@ function GroceryListGenerator() {
     const handleFileChange = (e) => {
         setSelectedFile(e.target.files[0]);
     };
-
-    const handleRecipeTypeChanged = (e) => {
-        setSelectedRecipeType(e.target.value);
-    }
 
     const handlePromptChange = (e) => {
         setPrompt(e.target.value);
@@ -41,7 +37,7 @@ function GroceryListGenerator() {
             return; // Do not proceed if no image is provided
         }
 
-        recipeApi.generateNewRecipeFromPicture(selectedRecipeType, selectedFile)
+        recipeApi.generateNewRecipeFromPicture(type, selectedFile, prompt)
             .then(response => {
                 if(!response){
                     console.error("Error scanning food, no response");
@@ -83,16 +79,6 @@ function GroceryListGenerator() {
                 :
                     <p> Selected {selectedFile.name} </p>
                 }
-                <select 
-                    id = "recipe_type_dropdown"
-                    value={selectedRecipeType}
-                    onChange={handleRecipeTypeChanged}
-                    placeholder={"--Select an option--"}
-                >
-                    <option value="breakfast">Breakfast</option>
-                    <option value="lunch">Lunch</option>
-                    <option value="dinner">Dinner</option>
-                </select>
                 <input
                     type="text"
                     placeholder="Enter some instructions if required"
@@ -116,4 +102,4 @@ function GroceryListGenerator() {
     );
 }
 
-export default GroceryListGenerator;
+export default RecipeGenerator;

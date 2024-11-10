@@ -37,7 +37,7 @@ class RecipeReturnModelSerializer(serializers.ModelSerializer):
     
     def get_steps(self, obj):
         return [
-            f"{step.number}. {step.instruction}"
+            f"{step.instruction}"
             for step in obj.steps.all()
         ]
     
@@ -132,3 +132,4 @@ class RecipeInputQuerySerializer(serializers.ModelSerializer):
 
 class GenerateNewRecipeFromPictureRequestSerializer(serializers.Serializer):
     file = serializers.FileField()
+    prompt = serializers.CharField()
