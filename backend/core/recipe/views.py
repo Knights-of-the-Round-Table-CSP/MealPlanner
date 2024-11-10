@@ -1,4 +1,5 @@
 import json
+import tempfile
 
 from django.shortcuts import render
 from django.shortcuts import get_object_or_404
@@ -102,6 +103,68 @@ class NewRecipeView(APIView):
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    
+class NewRecipeFromFileView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, type):
+        def getPath(file):
+            # Create a temporary file
+            with tempfile.NamedTemporaryFile(delete=False, suffix='.jpg') as temp_file:
+                for chunk in file.chunks():
+                    temp_file.write(chunk)
+                
+                temp_file_path = temp_file.name
+                return temp_file_path
+        
+        if type not in ["breakfast", "lunch", "dinner"]:
+            return Response(status=status.HTTP_404_NOT_FOUND)
+        
+        serializer = GenerateNewRecipeFromPictureRequestSerializer(data=request.data)
+
+        if serializer.is_valid():
+            file = serializer.validated_data['file']
+            path = getPath(file)
+            ai = GeminiAPI()
+            flag = 0
+
+            if type == "breakfast":
+                flag = flag + RecipeFlags.IS_BREAKFAST
+            elif type == "lunch":
+                flag = flag + RecipeFlags.IS_LUNCH
+            elif type == "dinner":
+                flag = flag + RecipeFlags.IS_DINNER
+
+            existing_recipes = [ recipe.name
+                for recipe in Recipe.objects
+                    .filter(owner=request.user)
+                    .extra(
+                        where=["flags & %s != 0"],
+                        params=[flag]
+                    )
+            ]
+            prompt = f"Give me a {type} recipe. But"
+            for name in existing_recipes:
+                prompt += " not " + name + ","
+
+            print("PROMPT: ", prompt)
+
+            # I'm sorry for this
+            # But sometimes it fails
+            tries = 0
+            while tries < 5:
+                result = ai.send_recipe_picture_prompt(prompt, path)
+                serializer = RecipeInputQuerySerializer(data=json.loads(result), context={'request': request, 'type': type})
+                if serializer.is_valid():
+                    recipe = serializer.save()
+                    output = RecipeReturnModelSerializer(recipe, context={'request': request})
+
+                    return Response(output.data)
+                tries += 1
+            
+            return Response(["JSON parsing failed with error: ", serializer.errors, result.split("\n")], status=status.HTTP_500_INTERNAL_SERVER_ERROR)
         
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 

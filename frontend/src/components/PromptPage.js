@@ -118,27 +118,21 @@ const PromptPage = () => {
     try {
       switch (type) {
         case "breakfast":
-          let breakfast = (await recipeApi.generateNewRecipe(type)).data;
           await recipeApi.deleteRecipe(recipeId);
           setBreakfastData(prevData => [
-            ...prevData.filter(recipe => recipe.id !== recipeId),
-            breakfast
+            ...prevData.filter(recipe => recipe.id !== recipeId)
           ])
           break;
         case "dinner":
-          let dinner = (await recipeApi.generateNewRecipe(type)).data;
           await recipeApi.deleteRecipe(recipeId);
           setDinnerData(prevData => [
-            ...prevData.filter(recipe => recipe.id !== recipeId),
-            dinner
+            ...prevData.filter(recipe => recipe.id !== recipeId)
           ])
           break;
         case "lunch":
-          let lunch = (await recipeApi.generateNewRecipe(type)).data;
           await recipeApi.deleteRecipe(recipeId);
           setLunchData(prevData => [
-            ...prevData.filter(recipe => recipe.id !== recipeId),
-            lunch
+            ...prevData.filter(recipe => recipe.id !== recipeId)
           ])
           break;
         default:

@@ -129,3 +129,6 @@ class RecipeInputQuerySerializer(serializers.ModelSerializer):
             CookingStep.objects.create(recipeId=instance, **step_data)  # Recreate steps
 
         return instance
+
+class GenerateNewRecipeFromPictureRequestSerializer(serializers.Serializer):
+    file = serializers.FileField()

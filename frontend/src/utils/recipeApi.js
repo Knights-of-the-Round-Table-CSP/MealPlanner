@@ -18,6 +18,17 @@ class RecipeApiService {
     return this.api.get(`api/new-recipe/${type}`)
   }
 
+  generateNewRecipeFromPicture(type, image) {
+    const formData = new FormData();
+    formData.append("file", image);
+
+    return this.api.post(`api/new-recipe-pic/${type}`, formData, {
+      headers: {
+          "Content-Type": "multipart/form-data",
+      },
+    });
+  }
+
   // Just if you want to create recipes manualy
   createRecipe(type, name, preparation_time, description, ingredients, steps) {
     let request = {
