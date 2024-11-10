@@ -9,6 +9,7 @@ import RecipePage from './components/RecipePage';
 import NavBar from './components/NavBar';
 import UserProfile from './components/UserProfilePage';
 import Footer from './components/Footer';
+import GroceryListGenerator from './components/GroceryList';
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
         <Route path="/prompt/:userId" element={<PromptPage />} />
         <Route path="/recipe/:recipeId" element={<RecipePage />} />
         <Route path="/userProfile/:userId" element={<UserProfile />} /> {/* User profile with dynamic ID */}
+        <Route path="/groceryList" element={<GroceryListGenerator />} />
       </Routes>
     </UserProvider>
   );
