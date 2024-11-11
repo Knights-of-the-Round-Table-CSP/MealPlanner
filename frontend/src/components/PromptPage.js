@@ -195,59 +195,16 @@ const PromptPage = () => {
 return (
   <div className="prompt-page-container">
     <div className="prompt_qa-container">
-      <h1>Welcome to the Prompt Page</h1>
 
-      {/* Q&A Section */}
-      <h2>Your Answers:</h2>
-      <ul>
-        {userAnswers.length > 0 ? (
-          userAnswers.map((entry, index) => (
-            <li key={index}>
-              <strong>User ID:</strong> {entry.userId}
-              <br />
-              <strong>Answers:</strong> {Array.isArray(entry.answers) ? entry.answers.join(', ') : 'No answers available.'}
-            </li>
-          ))
-        ) : (
-          <li>No answers available.</li>
-        )}
-      </ul>
-
-      <form onSubmit={handleSubmit}>
-        <label>
-          Prompt:
-          <input
-            type="text"
-            value={formInput}
-            onChange={handleInputChange}
-            required
-          />
-        </label>
-        <button type="submit">Submit</button>
-      </form>
-
-      {loading && <p>Loading...</p>}
-      {error && <p style={{ color: 'red' }}>{error}</p>}
-
-      {/* Output Data */}
-      <h2>Output Data:</h2>
-      <ul>
-        {outputData.length > 0 ? (
-          outputData.map((output, index) => (
-            <li key={index}>{output}</li>
-          ))
-        ) : (
-          <li>No output data available.</li>
-        )}
-      </ul>
 
       {/* Grid View Section */}
-      <h2>Your Recipes:</h2>
+    
       <div className="grid-container">
       <div>
     <div className="grid-row-header">  {/* Added this wrapper for Flexbox */}
-      <h2 className="grid-row-title">Breakfast</h2> <br></br><br></br>
+      <h2 className="grid-row-title">Breakfast</h2> 
     </div>
+    <br></br><br></br>
     <div className="grid-row">
       {breakfastData.length > 0 ? breakfastData.map(b => renderRecipeItem(b, "breakfast")) : <p>No data available</p>}
     </div>
@@ -261,6 +218,7 @@ return (
 
         <div>
           <h2 className="grid-row-title">Lunch</h2>
+          <br></br><br></br>
           <div className="grid-row">
             {lunchData.length > 0 ? lunchData.map(b => renderRecipeItem(b, "lunch")) : <p>No data available</p>}
           </div>
@@ -274,6 +232,7 @@ return (
 
         <div>
           <h2 className="grid-row-title">Dinner</h2>
+          <br></br><br></br>
           <div className="grid-row">
             {dinnerData.length > 0 ? dinnerData.map(b => renderRecipeItem(b, "dinner"))  : <p>No data available</p>}
           </div>
