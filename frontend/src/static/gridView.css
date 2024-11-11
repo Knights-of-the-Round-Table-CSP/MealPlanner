@@ -138,7 +138,7 @@
   background-size: contain;   /* Scale to fit */
   background-repeat: no-repeat; /* Prevent tiling */
   background-position: center; /* Center the image */
-  width: 200px;                /* Width of the button */
+  width: 350px;                /* Width of the button */
   height: 40px;               /* Height of the button */
   background-color: transparent; /* Make background transparent */
   border: none;               /* Remove border */

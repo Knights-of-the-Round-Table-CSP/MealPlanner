@@ -9,16 +9,28 @@ const QAPage = () => {
     const [questions, setQuestions] = useState([]);
     const [userAnswers, setUserAnswers] = useState([]);
     const [newAnswers, setNewAnswers] = useState({});
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
     const navigate = useNavigate();
 
     useEffect(() => {
-        questionsApiService.list()
-            .then(response => setQuestions(response.data || []))
-            .catch(error => console.error('Error fetching common questions:', error.message));
+        // Fetch questions and user answers from the API
+        const fetchData = async () => {
+            try {
+                const questionsResponse = await questionsApiService.list();
+                const answersResponse = await answersApiService.listUserAnswers();
 
-        answersApiService.listUserAnswers()
-            .then(response => setUserAnswers(response.data || []))
-            .catch(error => console.error('Error fetching user answers:', error.message));
+                setQuestions(questionsResponse.data || []);
+                setUserAnswers(answersResponse.data || []);
+            } catch (error) {
+                console.error('Error fetching data:', error.message);
+                setError('An error occurred while fetching questions or answers.');
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        fetchData();
     }, [id]);
 
     const handleSubmit = (e, questionId) => {
@@ -34,6 +46,18 @@ const QAPage = () => {
         }
     };
 
+    if (loading) {
+        return <p>Loading questions and answers...</p>;
+    }
+
+    if (error) {
+        return <p style={{ color: 'red' }}>{error}</p>;
+    }
+
+    if (questions.length === 0) {
+        return <p style={{ color: 'red' }}>No questions available at the moment.</p>;
+    }
+
     return (
         <div>
             <h1>Q&A Page for User {id}</h1>
@@ -41,15 +65,19 @@ const QAPage = () => {
                 <h2>All Questions:</h2>
                 <ul>
                     {questions.map((question) => {
-                        // Get all answers for this question
+                  
                         const allAnswers = userAnswers.filter(answer => answer.questionId === question.id);
                         return (
                             <li key={question.id}>
                                 {question.question}
                                 <ul>
-                                    {allAnswers.map((answer, index) => (
-                                        <li key={answer.id}>Answer {index + 1}: {answer.answer}</li>
-                                    ))}
+                                    {allAnswers.length > 0 ? (
+                                        allAnswers.map((answer, index) => (
+                                            <li key={answer.id}>Answer {index + 1}: {answer.answer}</li>
+                                        ))
+                                    ) : (
+                                        <li style={{ color: 'red' }}>No answers available for this question.</li>
+                                    )}
                                 </ul>
                                 <form onSubmit={(e) => handleSubmit(e, question.id)}>
                                     <input
