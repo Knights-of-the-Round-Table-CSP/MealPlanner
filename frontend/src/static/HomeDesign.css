@@ -82,7 +82,7 @@ input[type="password"] {
 .next-page-link {
     text-decoration: none;
     text-decoration: underline;
-    color: green;
+    color: #191970;
 }
 
 .next-page-link:hover {
@@ -97,7 +97,7 @@ input[type="password"] {
     width: 20%;               
     height: 5%;              
     background-color: rgba(255, 0, 0, 0.5); 
-    color: white;             /* Change this to white */
+    color: white;             
     display: flex;            
     justify-content: center;  
     align-items: center;      

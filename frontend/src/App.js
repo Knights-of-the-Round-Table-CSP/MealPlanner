@@ -10,6 +10,7 @@ import NavBar from './components/NavBar';
 import UserProfile from './components/UserProfilePage';
 import Footer from './components/Footer';
 import RecipeGenerator from './components/RecipeGenerator';
+import AboutPage from './components/about';
 
 import './App.css'
 
@@ -28,6 +29,8 @@ function App() {
           <Route path="/recipe/:recipeId" element={<RecipePage />} />
           <Route path="/userProfile/:userId" element={<UserProfile />} /> {/* User profile with dynamic ID */}
           <Route path="/newRecipe/:type" element={<RecipeGenerator />} />
+          <Route path="/about" element={<AboutPage />} />
+          
         </Routes>
       </div>
     </UserProvider>

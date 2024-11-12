@@ -18,7 +18,7 @@ class AnswerApiService {
   }
 
   deleteUserAnswer(id) {
-    return this.api.delete(`api/answer/${id}`)
+    return this.api.delete(`api/answers/${id}`)
   }
 }
 

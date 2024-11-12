@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import answersApiService from '../utils/answerApi';
 import aiApiService from '../utils/aiApi';
 import '../static/gridView.css';
+import '../static/FormDesign.css';
 import recipeApi from '../utils/recipeApi';
 
 const PromptPage = () => {

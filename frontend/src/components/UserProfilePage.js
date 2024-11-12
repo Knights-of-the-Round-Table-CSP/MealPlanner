@@ -1,4 +1,3 @@
-// UserProfile.js
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import userApiService from '../utils/userApi';
@@ -7,8 +6,8 @@ import '../static/userProfile.css';
 
 const UserProfile = () => {
     const navigate = useNavigate();
-    const { userId } = useParams(); // Assuming this is used for other navigations
-    const { login } = useUser(); // Assuming this context provides user state management
+    const { userId } = useParams(); 
+    const { login } = useUser();
 
     const [user, setUser] = useState({ email: null, first_name: null, last_name: null });
     const [error, setError] = useState(null);
@@ -18,16 +17,16 @@ const UserProfile = () => {
     useEffect(() => {
         const fetchUserData = async () => {
             try {
-                const response = await userApiService.profile(); // Fetch profile data
+                const response = await userApiService.profile();
                 if (!response || !response.data) {
                     throw new Error('User data not found');
                 }
-                setUser(response.data); // Set user data from API
+                setUser(response.data);
             } catch (err) {
                 console.error('Failed to fetch user data from API:', err);
                 setError('Failed to load user profile.');
             } finally {
-                setLoading(false); // Stop loading
+                setLoading(false);
             }
         };
 
@@ -38,7 +37,7 @@ const UserProfile = () => {
         <div className="error-container">
             <h1>Error</h1>
             <p>{errorMessage}</p>
-            <button onClick={() => navigate(`/qa/${userId}`)}>Go to Q&A Page</button>
+            <button onClick={() => navigate('/login')}>Go to Login Page</button>
         </div>
     );
 
@@ -58,17 +57,17 @@ const UserProfile = () => {
     );
 
     if (loading) {
-        return <div className="loading-container">Loading...</div>; // Show loading message
+        return <div className="loading-container">Loading...</div>;
     }
 
     if (error) {
-        return renderError(error); // Render error if there is one
+        return renderError(error);
     }
 
     return (
         <div className="user-profile-container">
             <h1 className="profile-title">My Profile</h1>
-            {renderUserProfile(user)} {/* Render user profile content */}
+            {renderUserProfile(user)}
         </div>
     ); 
 };

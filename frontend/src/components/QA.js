@@ -24,7 +24,7 @@ const QAPage = () => {
                 setUserAnswers(answersResponse.data || []);
             } catch (error) {
                 console.error('Error fetching data:', error.message);
-                setError('An error occurred while fetching questions or answers.');
+                setError('Unable to load questions from the database.');
             } finally {
                 setLoading(false);
             }
@@ -46,44 +46,81 @@ const QAPage = () => {
         }
     };
 
+    const handleDeleteAnswer = async (answerId) => {
+        console.log(answerId)
+        try {
+            await answersApiService.deleteUserAnswer(answerId);
+            setUserAnswers(prevData => [
+                ...prevData.filter(answer => answer.answerId !== answerId)
+              ])
+        } catch (error) {
+            console.error('Error deleting answer:', error.message);
+            setError('Failed to delete the answer.');
+        }
+    };
+
     if (loading) {
         return <p>Loading questions and answers...</p>;
     }
 
-    if (error) {
-        return <p style={{ color: 'red' }}>{error}</p>;
-    }
-
-    if (questions.length === 0) {
-        return <p style={{ color: 'red' }}>No questions available at the moment.</p>;
+    if (error || questions.length === 0) {
+        return (
+            <div className='noData'>
+                <p style={{ color: 'red' }}>
+                    {error || 'No questions available at the moment.'}
+                </p>
+                <button onClick={() => navigate('/login')}>Go to Login Page</button>
+            </div>
+        );
     }
 
     return (
         <div>
             <h1>Q&A Page for User {id}</h1>
             <div className="qa-container">
-                <h2>All Questions:</h2>
+                <h1>All Questions with the Answers</h1>
                 <ul>
                     {questions.map((question) => {
-                  
                         const allAnswers = userAnswers.filter(answer => answer.questionId === question.id);
+    
+                        // Log the current question, and its associated answers
+                        console.log('Question:', question);
+                        console.log('All answers for this question:', allAnswers);
+    
                         return (
-                            <li key={question.id}>
-                                {question.question}
+                            <li key={question.id} className="question-card">
+                                <h2 className="question-text">{question.question}</h2>
                                 <ul>
                                     {allAnswers.length > 0 ? (
                                         allAnswers.map((answer, index) => (
-                                            <li key={answer.id}>Answer {index + 1}: {answer.answer}</li>
+                                            <li key={answer.answerId}>
+                                                Answer {index + 1}: {answer.answer} &nbsp; &nbsp;
+                                                <button
+                                                    onClick={() => {
+                                                        console.log('Deleting answer:', answer.answerId);
+                                                        handleDeleteAnswer(answer.answerId);
+                                                    }}
+                                                >
+                                                    Delete
+                                                </button>
+                                            </li>
                                         ))
                                     ) : (
                                         <li style={{ color: 'red' }}>No answers available for this question.</li>
                                     )}
                                 </ul>
-                                <form onSubmit={(e) => handleSubmit(e, question.id)}>
+                                <form onSubmit={(e) => {
+                                    e.preventDefault();
+                                    console.log('Submitting answer for question:', question.id, 'Answer:', newAnswers[question.id]);
+                                    handleSubmit(e, question.id);
+                                }}>
                                     <input
                                         type="text"
                                         value={newAnswers[question.id] || ''}
-                                        onChange={(e) => setNewAnswers(prev => ({ ...prev, [question.id]: e.target.value }))}
+                                        onChange={(e) => {
+                                            console.log('Answer input changed:', e.target.value); // Log input changes
+                                            setNewAnswers(prev => ({ ...prev, [question.id]: e.target.value }));
+                                        }}
                                         placeholder="Type your answer here"
                                     />
                                     <button type="submit">Submit Answer</button>
@@ -95,6 +132,7 @@ const QAPage = () => {
             </div>
         </div>
     );
+    
 };
 
 export default QAPage;
