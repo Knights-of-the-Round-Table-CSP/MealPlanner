@@ -23,6 +23,11 @@ class GeminiAPI(AI_API_Client):
         response = model.generate_content(message)
         return str(response.text)
     
+    def send_tuned_prompt(self, message):
+        model = genai.GenerativeModel("tunedModels/untitled-tuned-model-c97nutnhcn4o")
+        response = model.generate_content(message)
+        return str(response.text)
+    
     def send_configured_prompt(self, message, config=None, instruction=""):
 
         if config is None:
@@ -116,6 +121,7 @@ class GeminiAPI(AI_API_Client):
             You are answering only with recipes in JSON format. 
             do not use ```json annotation.
             If you cannot answer with a recipe, you say 'I cannot provide this information.'
+            Use possible ingredients from the picture.
 
             All recipes should be in this format:
 
@@ -162,5 +168,38 @@ class GeminiAPI(AI_API_Client):
 
         return str(response.text)
 
+    def send_chat_message(self, message, message_history, recipe):
 
+        generation_config = {
+            "temperature": 1,
+            "top_p": 0.95,
+            "top_k": 40,
+            "max_output_tokens": 1000,
+            "response_mime_type": "text/plain",
+        }
 
+        instruction = """
+            You are helping with cooking.
+            The user has a food recipe and he needs a help with cooking it.
+            If user asks something not about cooking, you answer 'I cannot provide this information.'
+            Do not use any annotations, like ** for bold.
+            Answer with rather short messages, like a chatbot.
+
+            The recipe is:
+
+            """
+        instruction += recipe
+
+        model = genai.GenerativeModel(
+            model_name="gemini-1.5-flash",
+            generation_config=generation_config,
+            system_instruction=instruction,
+        )
+
+        messages = [{"role": m["role"], "parts": m["message"]} 
+                    for m in message_history]
+
+        chat_session = model.start_chat(history=messages)
+        response = chat_session.send_message(message)
+
+        return str(response.text)

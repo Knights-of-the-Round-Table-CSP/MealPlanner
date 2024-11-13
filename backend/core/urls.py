@@ -2,8 +2,11 @@ from django.urls import path
 
 from .qa.views import *
 from .recipe.views import *
+from .chat.views import *
 
 urlpatterns = [
+    path('chat/', ChatView.as_view(), name='chat'),
+
     path('new-recipe/<str:type>', NewRecipeView.as_view(), name='new_recipe'),
     path('new-recipe-pic/<str:type>', NewRecipeFromFileView.as_view(), name='new_recipe_pic'),
     path('change-detalization/<int:pk>', ChangeRecipeDetalizationView.as_view(), name='change_detalization'),

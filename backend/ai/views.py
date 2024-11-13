@@ -19,3 +19,12 @@ class GeminiView(APIView):
             result = ai.send_prompt(serializer.validated_data['message'])
 
             return Response({"request": serializer.validated_data['message'], "response": result.split('\n')})
+        
+class AIDebugView(APIView):
+    
+    def get(self, request):
+        ai = GeminiAPI()
+        result = ["BEGIN"]
+
+        result += ["END"]
+        return Response(result)
