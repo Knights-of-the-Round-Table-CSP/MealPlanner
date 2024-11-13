@@ -1,19 +1,19 @@
-/* Centering the container */
+
 .container {
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh; /* Full viewport height */
-    margin: 0; /* Removes any top margin so it centers fully */
+    height: 100vh; 
+    margin: 0; 
 }
 
-/* Form box styling remains the same */
+
 .form-box {
     background-color: white;
     border: 1px solid #ccc;
     border-radius: 8px;
-    padding: 20px; /* Ensure there's padding around the box */
+    padding: 20px; 
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 20%;
     display: flex;
@@ -27,7 +27,7 @@
     width: 20%;               
     height: 5%;              
     background-color: rgba(255, 0, 0, 0.5); 
-    color: white;             /* Change this to white */
+    color: white;            
     display: flex;            
     justify-content: center;  
     align-items: center;      
@@ -41,7 +41,7 @@
 
 
 .form-group {
-    margin-bottom: 15px; /* Spacing between form groups */
+    margin-bottom: 15px; 
 }
 
 label {
@@ -53,9 +53,9 @@ input {
     padding: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
-    margin-bottom: 15px; /* Space between input fields */
-    box-sizing: border-box; /* Ensure padding and border are included in width */
-    width: 100%; /* Full width for the input */
+    margin-bottom: 15px; 
+    box-sizing: border-box; 
+    width: 100%; 
 }
 
 button {
@@ -76,7 +76,7 @@ button:hover {
 }
 
 .success {
-    color: green; /* Success message color */
+    color: green; 
 }
 
 .next-page-link {

@@ -1,23 +1,23 @@
 .box {
-    min-height: 100vh; /* Full viewport height */
+    min-height: 100vh; 
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: Arial, sans-serif;
 }
 
-/* Main container styling */
+
 .groceryListContainer {
     width: 100%;
-    max-width: 600px; /* Restrict the container's width to avoid stretching too much */
+    max-width: 600px; 
     padding: 20px;
     background-color: #f9f9f9;
     border-radius: 8px;
     box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    text-align: center; /* Center the text */
+    text-align: center; 
 }
 
-/* Styling for the inputs and button */
+
 .groceryListContainer input {
     width: 100%;
     padding: 10px;

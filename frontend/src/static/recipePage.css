@@ -20,37 +20,37 @@
   height: fit-content;
 }
 
-/* Recipe title styling */
+
 .content-container h1 {
   font-size: 2em;
-  color: #333; /* Dark text color */
+  color: #333; 
   margin-bottom: 15px;
-  text-align: center; /* Center title text */
+  text-align: center; 
 }
 
-/* Section headings */
+
 .content-container h2 {
   font-size: 1.5em;
-  color: #007acc; /* Accent color */
+  color: #007acc; 
   margin-top: 20px;
   margin-bottom: 10px;
 }
 
-/* Unordered list for ingredients */
+
 .content-container ul {
   list-style-type: disc;
   margin-left: 20px;
-  color: #444; /* Slightly darker text for readability */
+  color: #444; 
 }
 
-/* Ordered list for steps */
+
 .content-container ol {
   list-style-type: decimal;
   margin-left: 20px;
   color: #444;
 }
 
-/* Button styling */
+
 .content-container button {
   padding: 10px 15px;
   background-color: #ADD8E6;
@@ -67,17 +67,17 @@
   color: white;
 }
 
-/* LLM Response styling */
+
 .llm-response {
   margin-top: 20px;
   padding: 15px;
-  background-color: #f0f8ff; /* Light blue background */
+  background-color: #f0f8ff; 
   border-radius: 8px;
-  color: #333; /* Dark text */
+  color: #333; 
 }
 
 .llm-response h2 {
   margin-top: 0;
   font-size: 1.3em;
-  color: #007acc; /* Accent color */
+  color: #007acc; 
 }

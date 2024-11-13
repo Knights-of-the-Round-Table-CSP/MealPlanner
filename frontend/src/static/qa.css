@@ -1,26 +1,26 @@
 .qa-container {
-    display: block; /* Change from flex to block */
-    margin: 0 auto; /* Center container if necessary, though this is optional */
+    display: block; 
+    margin: 0 auto; 
 
-    max-width: 100%; /* Optional: Limit the width for readability */
+    max-width: 100%; 
     margin-top: 2%;
 }
 
-/* Title styles */
+
 .qa-container h1 {
     font-size: 2em;
     color: #333;
     margin-bottom: 10px;
 }
 
-/* Subheading styles */
+
 .qa-container h2 {
     font-size: 1.5em;
     color: #555;
     margin-top: 20px;
 }
 
-/* List styles */
+
 .qa-container ul {
     list-style: none;
     padding: 0;
@@ -28,10 +28,10 @@
 
 .qa-container li {
     padding: 15px;
-    border-bottom: 1px solid #eee;  /* Changed to make borders visible */
+    border-bottom: 1px solid #eee; 
 }
 
-/* Input styles */
+
 .qa-container input[type="text"] {
     width: 50%;
     padding: 10px;

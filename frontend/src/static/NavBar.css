@@ -1,15 +1,13 @@
-/* NavBar.css */
-
 .navbar {
     background-color: #A7C7E7;
     color: black;
     padding: 20px 0;
     width: 100%;
     top: 0;
-    left: 0; /* Ensure it stretches across the page */
-    position: fixed; /* Keeps the navbar at the top */
+    left: 0; 
+    position: fixed; 
     box-sizing: border-box;
-    z-index: 1000; /* Ensures the navbar stays on top of other elements */
+    z-index: 1000; 
 }
 
 .navbar ul {

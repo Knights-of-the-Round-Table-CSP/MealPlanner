@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useParams, useNavigate } from 'react-router-dom';
 import "../static/ChatWindow.css";
 import chatApiService from "../utils/chatApi";
 
@@ -8,6 +9,7 @@ const ChatWindow = ({ onClose }) => {
   ]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const { recipeId } = useParams();
 
   const handleSend = async () => {
     let user_message = input
@@ -16,11 +18,12 @@ const ChatWindow = ({ onClose }) => {
     setMessages(prev => [...prev, { message: user_message, role: "user"}])
     setIsLoading(true);
 
-    chatApiService.post(user_message.trim(), messages, 31) // Hardcoded recipe id !!!
+    chatApiService.post(user_message.trim(), messages, recipeId) // should work now
       .then(resp => {
         if (resp.data) {
           let {response} = resp.data
           setMessages(prev => [...prev, { message: response, role: "model"}])
+          console.log(recipeId)
         }
       })
       .catch(error => 

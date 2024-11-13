@@ -76,7 +76,7 @@
   width: auto; 
   margin-bottom: 8px;
   align-self: flex-start;
-  margin-left: 80%;
+  margin-right: 80%;
   height: auto; 
 }
 
@@ -85,11 +85,10 @@
   color: black;
   padding: 8px;
   border-radius: 12px;
-  width: auto;
-  max-width: 70%; 
+  width: auto; 
   margin-bottom: 8px;
   align-self: flex-end;
-  margin-right: 80%;
+  margin-left: 80%;
   height: auto; 
 }
 

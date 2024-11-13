@@ -1,14 +1,14 @@
 .prompt-page-container {
 
-  display: flex; /* Enable Flexbox for child alignment */
-  justify-content: center; /* Center child elements horizontally */
-  align-items: center; /* Center child elements vertically */
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
   margin-top: 1%;
   margin-top: 2%;
 
 }
 
-/* Centered content container styling */
+
 .prompt_qa-container {
   height: 100%; 
   justify-content: center; 
@@ -23,7 +23,7 @@
   align-items: center; 
 }
 
-/* Title styles */
+
 .prompt_qa-container h1 {
   font-size: 2em;
   color: #333;
@@ -37,7 +37,7 @@
   margin-top: 20px;
 }
 
-/* Input styles */
+
 .prompt_qa-container input[type="text"] {
   width: calc(80% - 22px);
   padding: 10px;
@@ -63,7 +63,7 @@
   color: white;
 }
 
-/* Grid View Section */
+
 .grid-container {
   display: flex;
   flex-direction: column;
@@ -72,7 +72,7 @@
   width: 100%;
 }
 
-/* Responsive Grid Row */
+
 .grid-row {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Responsive grid */
@@ -90,21 +90,21 @@
   flex-direction: column;
   align-items: stretch;
   min-height: 100px;
-  overflow: hidden; /* Prevent overflow */
+  overflow: hidden; 
 }
 
 .recipe-buttons {
   display: flex;
-  width: 100%; /* Adjust width to full container */
+  width: 100%; 
   gap: 10px;
   align-items: center;
-  flex-wrap: wrap; /* Allow buttons to wrap */
+  flex-wrap: wrap; 
 }
 
-/* Optional: Add specific styles for buttons */
+
 .recipe-buttons button {
-  flex: 1; /* Allow buttons to grow and shrink */
-  max-width: 100px; /* Set a max width to control button size */
+  flex: 1; 
+  max-width: 100px; 
 }
 
 
@@ -123,37 +123,37 @@
 }
 
 .grid-row-header {
-  display: flex;               /* Use Flexbox to align children */
-  align-items: center;        /* Center the items vertically */
-  gap: 10px;                  /* Space between title and button */
+  display: flex;               
+  align-items: center;        
+  gap: 10px;                  
 }
 
 .grid-row-title {
-  font-size: 1.5rem;          /* Title font size */
-  font-weight: bold;          /* Bold title */
-  margin: 0;                  /* Remove default margin */
+  font-size: 1.5rem;        
+  font-weight: bold;          
+  margin: 0;                
 }
 
 .grid-row-button {
   
-  background-size: contain;   /* Scale to fit */
-  background-repeat: no-repeat; /* Prevent tiling */
-  background-position: center; /* Center the image */
-  width: 350px;                /* Width of the button */
-  height: 40px;               /* Height of the button */
+  background-size: contain;   
+  background-repeat: no-repeat; 
+  background-position: center; 
+  width: 350px;               
+  height: 40px;             
   background-color: #ADD8E6;
-  border: none;               /* Remove border */
-  padding: 0;                 /* Remove padding */
-  cursor: pointer;            /* Pointer on hover */
+  border: none;               
+  padding: 0;                
+  cursor: pointer;           
 }
 .recipe-request {
-  display: flex;             /* Enable Flexbox for this section */
-  align-items: center;      /* Center items vertically */
-  gap: 10px;                /* Space between the heading and button */
-  margin-top: 10px;         /* Space above this section */
+  display: flex;             
+  align-items: center;      
+  gap: 10px;                
+  margin-top: 10px;        
 }
 
 .recipe-request h3 {
-  margin: 0;                /* Remove default margin */
-  font-size: 1.2em;         /* Adjust font size as necessary */
+  margin: 0;               
+  font-size: 1.2em;       
 }

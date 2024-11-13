@@ -1,4 +1,3 @@
-// ChatbotBubble.js
 import React from "react";
 import "../static/ChatbotBubble.css";
 

@@ -1,23 +1,34 @@
-// AboutPage.js
 import React, { useState } from "react";
-import ChatbotBubble from "./ChatbotBubble";
-import ChatWindow from "./ChatWindow";
+import '../static/AboutPage.css'; 
 
 const AboutPage = () => {
-  const [isChatOpen, setIsChatOpen] = useState(false);
-
-  const toggleChat = () => {
-    setIsChatOpen(!isChatOpen);
-  };
 
   return (
-    <div>
-      <h1>About Us</h1>
-      <p>Welcome to our website. We are a company dedicated to providing top-notch services.</p>
+    <div className="about-page">
 
-      {isChatOpen && <ChatWindow onClose={toggleChat} />}
-      
-      {!isChatOpen && <ChatbotBubble onClick={toggleChat} />}
+      <div className="about-section">
+        <img src="path/to/image1.jpg" alt="Oleg" className="about-image" />
+        <div className="about-text">
+          <h2>Oleg</h2>
+          <p>......................</p>
+        </div>
+      </div>
+
+      <div className="about-section">
+        <img src="path/to/image2.jpg" alt="Matti" className="about-image" />
+        <div className="about-text">
+          <h2>Matti</h2>
+          <p>.........................</p>
+        </div>
+      </div>
+
+      <div className="about-section">
+        <img src="path/to/image3.jpg" alt="Sabina" className="about-image" />
+        <div className="about-text">
+          <h2>Sabina</h2>
+          <p>...................</p>
+        </div>
+      </div>
     </div>
   );
 };

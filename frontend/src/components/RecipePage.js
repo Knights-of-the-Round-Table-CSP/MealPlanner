@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import aiApiService from '../utils/aiApi'; // Assuming you have an API service for LLM
-import '../static/recipePage.css'; // Add your CSS for styling
+import aiApiService from '../utils/aiApi'; 
+import '../static/recipePage.css'; 
 import recipeApi from '../utils/recipeApi';
+import ChatbotBubble from "./ChatbotBubble";
+import ChatWindow from "./ChatWindow";
+
 
 const RecipePage = () => {
   const { recipeId } = useParams();
@@ -12,6 +15,12 @@ const RecipePage = () => {
   const [llmResponse, setLlmResponse] = useState('');
   const [llmLoading, setLlmLoading] = useState(false);
   const navigate = useNavigate();
+
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  const toggleChat = () => {
+    setIsChatOpen(!isChatOpen);
+  };
 
   const fetchRecipeData = async () => {
     recipeApi.getRecipe(recipeId)
@@ -25,7 +34,6 @@ const RecipePage = () => {
       .finally(() => setLoading(false));
   };
 
-  // Initial load of recipe data
   useEffect(() => {
     fetchRecipeData();
   }, [recipeId]);
@@ -78,6 +86,11 @@ const RecipePage = () => {
             <p>{llmResponse}</p>
           </div>
         )}
+      </div>
+      <div>
+      {isChatOpen && <ChatWindow onClose={toggleChat} />}
+      
+      {!isChatOpen && <ChatbotBubble onClick={toggleChat} />}
       </div>
     </div>
   );
