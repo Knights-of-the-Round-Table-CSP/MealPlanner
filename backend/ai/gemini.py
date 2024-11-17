@@ -5,6 +5,10 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
+MODEL_NAME = "gemini-1.5-flash"
+RECIPE_MODEL_NAME = "gemini-1.5-flash"
+CHAT_MODEL_NAME = "gemini-1.5-flash"
+
 class GeminiAPI(AI_API_Client):
     def __init__(self):
         api_key = os.getenv("API_KEY")  # Use the variable name defined in .env
@@ -19,32 +23,7 @@ class GeminiAPI(AI_API_Client):
         pass
 
     def send_prompt(self, message):
-        model = genai.GenerativeModel("gemini-1.5-flash")
-        response = model.generate_content(message)
-        return str(response.text)
-    
-    def send_tuned_prompt(self, message):
-        model = genai.GenerativeModel("tunedModels/untitled-tuned-model-c97nutnhcn4o")
-        response = model.generate_content(message)
-        return str(response.text)
-    
-    def send_configured_prompt(self, message, config=None, instruction=""):
-
-        if config is None:
-            config = {
-                "temperature": 1,
-                "top_p": 0.95,
-                "top_k": 40,
-                "max_output_tokens": 8192,
-                "response_mime_type": "text/plain",
-            }
-
-        model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
-            generation_config=config,
-            system_instruction=instruction,
-        )
-        
+        model = genai.GenerativeModel(MODEL_NAME)
         response = model.generate_content(message)
         return str(response.text)
     
@@ -98,7 +77,7 @@ class GeminiAPI(AI_API_Client):
             """
 
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name=RECIPE_MODEL_NAME,
             generation_config=config,
             system_instruction=instruction,
         )
@@ -157,7 +136,7 @@ class GeminiAPI(AI_API_Client):
             """
 
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name=RECIPE_MODEL_NAME,
             generation_config=config,
             system_instruction=instruction,
         )
@@ -191,7 +170,7 @@ class GeminiAPI(AI_API_Client):
         instruction += recipe
 
         model = genai.GenerativeModel(
-            model_name="gemini-1.5-flash",
+            model_name=CHAT_MODEL_NAME,
             generation_config=generation_config,
             system_instruction=instruction,
         )

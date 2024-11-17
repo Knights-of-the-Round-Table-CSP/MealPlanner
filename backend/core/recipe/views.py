@@ -9,6 +9,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework import status
 
 from ai.gemini import *
+from .. qa.serializer import *
 from .. models import *
 from . serializer import *
 
@@ -76,6 +77,11 @@ class NewRecipeView(APIView):
         prompt = f"Give me a {type} recipe. But"
         for name in existing_recipes:
             prompt += " not " + name + ","
+
+        prompt += "\nAnd here are some user answers on related questions for context:\n"
+        questions = Question.objects.all()
+        serializer = QuestionAnswersToTextSerializer(questions, many=True, context={'request': request})
+        prompt += str(serializer.data)
 
         print("PROMPT: ", prompt)
 
@@ -152,9 +158,15 @@ class NewRecipeFromFileView(APIView):
             ]
             prompt = f"Give me a {type} recipe. "
             prompt += f"Special instructions are: " + user_input + ". "
+
             prompt += "But"
             for name in existing_recipes:
                 prompt += " not " + name + ","
+
+            prompt += "\nAnd here are some user answers on related questions for context:\n"
+            questions = Question.objects.all()
+            serializer = QuestionAnswersToTextSerializer(questions, many=True, context={'request': request})
+            prompt += str(serializer.data)
 
             print("PROMPT: ", prompt)
 
@@ -166,7 +178,7 @@ class NewRecipeFromFileView(APIView):
                     result = ai.send_recipe_picture_prompt(prompt, path)
                 else:
                     result = ai.send_recipe_prompt(prompt)
-
+                print(result)
                 serializer = RecipeInputQuerySerializer(data=json.loads(result), context={'request': request, 'type': type})
 
                 if serializer.is_valid():

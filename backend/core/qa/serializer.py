@@ -35,3 +35,22 @@ class QuestionsReturnModelSerializer(serializers.ModelSerializer):
             AnswerReturnModelSerializer(answer, context={'request': self.context['request']}).data
             for answer in obj.answers.filter(userId=user)
         ]
+    
+class SimpleAnswerSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Answer
+        fields = ['answer']
+
+class QuestionAnswersToTextSerializer(serializers.ModelSerializer):
+    answers = serializers.SerializerMethodField()
+
+    class Meta:
+        model = Question
+        fields = ['question', 'answers']
+
+    def get_answers(self, obj):
+        user = self.context['request'].user
+        return [
+            answer.answer
+            for answer in obj.answers.filter(userId=user)
+        ]
