@@ -1,0 +1,117 @@
+Set 1
+Questions About Daily Habits
+Meal Patterns:
+"What’s the usual structure of your meals during the day (e.g., breakfast, lunch, dinner)?"
+"Do you prefer light meals or hearty ones, especially for [meal time]?"
+Routine and Frequency:
+
+"How often do you cook at home during the week?"
+"What’s your cooking routine on weekdays versus weekends?"
+Staple Foods:
+
+"What ingredients do you always keep stocked in your kitchen?"
+"Is there a type of food you always eat, no matter the day?"
+Questions About Desired Experience
+Experience Expectations:
+
+"When using a recipe app, what kind of help do you wish it would give you?"
+"What frustrates you the most when looking for recipes online or in cookbooks?"
+Exploration vs. Familiarity:
+
+"Do you usually stick to meals you know how to make or try new ones?"
+"Would you prefer to follow detailed recipes or get loose guidance to experiment?"
+Lifestyle and Constraints
+Budget and Accessibility:
+
+"Do you have a budget range in mind for meals?"
+"Are there any ingredients or cuisines that are harder for you to access?"
+Time Management:
+
+"How much time do you usually spend preparing meals?"
+"Are you looking for recipes to fit into a specific schedule (e.g., quick lunches, slow dinners)?"
+Health and Nutrition:
+
+"Are there specific nutritional goals you’re working toward (e.g., more protein, fewer carbs)?"
+"Do you track calories or macros when cooking or eating?"
+Questions to Tap Into Personality and Preferences
+Cooking Personality:
+
+"How would you describe yourself as a cook? (e.g., adventurous, beginner, expert)"
+"What’s your favorite way to prepare food—quick stir-fry, baking, grilling?"
+Meal Focus:
+
+"What’s the most important part of a meal for you—flavor, nutrition, presentation, or simplicity?"
+"Do you enjoy meals that pair with drinks, like wine or smoothies?"
+Cultural and Emotional Connection:
+
+"Are there recipes that remind you of home or a special memory?"
+"What role does food play in your daily life—fuel, comfort, or creativity?"
+Contextual and Adaptive Questions
+Occasion-Based Questions:
+
+"Are you planning meals for a specific event or just your daily routine?"
+"Do you need recipes for specific occasions, like family dinners, holidays, or date nights?"
+Weather and Seasons:
+
+"Do you feel like eating seasonally? What’s your favorite seasonal ingredient?"
+"Are you craving something warm and cozy or light and refreshing?"
+Engagement and Post-Cooking Feedback
+Post-Recipe Experience:
+
+"What did you like or dislike about the last meal you cooked?"
+"Do you like to tweak recipes after trying them? If so, how?"
+Daily Inspiration:
+
+"What kind of mood are you in when deciding what to cook?"
+"Do you like surprises or do you prefer to plan meals ahead?"
+
+Set 2
+
+Questions to Understand User Preferences
+Taste Preferences:
+
+"What flavors do you usually enjoy in your meals? (e.g., sweet, spicy, savory, tangy)"
+"Tell us about a dish you absolutely love. What do you like most about it?"
+Ingredients:
+
+"Are there any specific ingredients you'd like to include in your meal?"
+"Are there any ingredients you'd like to avoid or dislike?"
+Cuisine Interests:
+
+"What type of cuisine are you in the mood for today? (e.g., Italian, Indian, Mexican, etc.)"
+"What’s a cuisine or dish you’ve been curious to try?"
+Questions About Dietary Restrictions
+Allergies and Restrictions:
+
+"Do you have any food allergies or dietary restrictions we should know about?"
+"Are you following any specific diet (e.g., keto, vegan, gluten-free)?"
+Health Goals:
+
+"Are you looking for meals to fit a specific health goal, such as low-calorie or high-protein options?"
+"How important is nutritional balance in your meal?"
+Questions About Context and Occasion
+Time and Effort:
+
+"How much time do you have to prepare your meal?"
+"Do you prefer recipes that require minimal cooking effort or more elaborate dishes?"
+Servings:
+
+"How many people are you cooking for?"
+"Are you preparing a meal for yourself or for a special occasion?"
+Tools and Ingredients:
+
+"What kitchen tools or appliances do you have available? (e.g., oven, blender, slow cooker)"
+"Are you looking for recipes that use only ingredients you already have at home?"
+Questions to Capture Personalization
+Mood and Cravings:
+
+"What are you craving right now? Describe the perfect meal for this moment."
+"Is there a specific texture you’re in the mood for? (e.g., crunchy, creamy, chewy)"
+Experimentation:
+
+"Are you open to trying new recipes or do you prefer familiar ones?"
+"Do you like to stick to classic dishes or add a creative twist to your meals?"
+Feedback for Fine-Tuning
+Refinement:
+"What’s a recipe you’ve tried recently that didn’t work out for you? What was missing?"
+"If you’ve used a recipe app before, what did you like or dislike about it?"
