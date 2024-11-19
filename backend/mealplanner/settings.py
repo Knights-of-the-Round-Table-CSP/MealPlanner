@@ -151,14 +151,14 @@ LOGIN_REDIRECT_URL = ""
 LOGOUT_REDIRECT_URL = ""
 
 # JWT Settings (Optional)
-#from datetime import timedelta
+from datetime import timedelta
 
-#SIMPLE_JWT = {
-#    'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
-#    'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
-#    'ROTATE_REFRESH_TOKENS': True,
-#    'BLACKLIST_AFTER_ROTATION': True,
-#}
+SIMPLE_JWT = {
+   'ACCESS_TOKEN_LIFETIME': timedelta(minutes=60),
+   'REFRESH_TOKEN_LIFETIME': timedelta(days=1),
+   'ROTATE_REFRESH_TOKENS': True,
+   'BLACKLIST_AFTER_ROTATION': True,
+}
 
 # CORS
 

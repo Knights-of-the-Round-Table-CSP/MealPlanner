@@ -38,7 +38,7 @@ const LoginForm = () => {
           }
 
           login(userData)
-          navigate(`/prompt/${id}`); 
+          navigate(`/qa/${id}`); 
         } else {
           setError('Login failed.');
         }

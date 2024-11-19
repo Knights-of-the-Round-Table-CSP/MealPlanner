@@ -30,7 +30,7 @@ class GeminiAPI(AI_API_Client):
     def send_recipe_prompt(self, message):
         
         config = {
-            "temperature": 1,
+            "temperature": 1.5,
             "top_p": 0.95,
             "top_k": 40,
             "max_output_tokens": 8192,
@@ -74,6 +74,7 @@ class GeminiAPI(AI_API_Client):
             }
 
             where quantity is a valid number with decimals, do not use 1/2, use 0.5
+            do not use ```json annotation!
             """
 
         model = genai.GenerativeModel(
@@ -133,6 +134,7 @@ class GeminiAPI(AI_API_Client):
             }
 
             where quantity is a valid number with decimals, do not use 1/2, use 0.5
+            do not use ```json annotation!
             """
 
         model = genai.GenerativeModel(

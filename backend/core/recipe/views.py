@@ -212,9 +212,9 @@ class ChangeRecipeDetalizationView(APIView):
         ai = GeminiAPI()
 
         if isLong:
-            prompt = f"Make this recipe shorter. Avoid unnessesary details.\n"
+            prompt = f"Make this recipe steps shorter. Avoid unnessesary details.\n"
         else:
-            prompt = f"Make this recipe more detalised, add tips and details. I'm not good at cooking.\n"
+            prompt = f"Make this recipe steps more detalised, add tips and details. I'm not good at cooking.\n"
         prompt += json.dumps(serializer.data)
 
         print("PROMPT: ", prompt)
