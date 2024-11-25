@@ -61,7 +61,7 @@ function RecipeGenerator() {
     return (
         <div className="box">
             <div className='groceryListContainer'>
-                <h2>Grocery List Generation</h2>
+                <h2>Custom recipe generator</h2>
                 <br /><br />
                 { selectedFile === null 
                 ?
