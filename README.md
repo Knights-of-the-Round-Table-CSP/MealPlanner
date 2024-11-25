@@ -63,6 +63,7 @@ Week 7 Update:
   - Answers are included in prompts
   - Checked different configurations
 - Other small fixes here-there
+- Working mostly on demo
 
 Week 8 Update:
 - Demo on monday 25.11.2024
