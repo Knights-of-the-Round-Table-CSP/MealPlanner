@@ -44,13 +44,25 @@ Week 4 Update:
 - LLM is connected and generates recipes
 
 Week 5 Update:
-- 
+- Improved prompts for more creative output
+- Added recipe maximization and minimization
+- Frontend connected with new API endpoints
+- Custom resipe generation page
+- Ingredients from the picture feature implemented
 
 Week 6 Update:
--
+- Improved frontend design
+- Added chatbot window
+- Created new setup for chat LLM model
+- Added message history
+- Connected with frontend
 
 Week 7 Update:
-- 
+- Improvements in prompts:
+  - Selected questions for user
+  - Answers are included in prompts
+  - Checked different configurations
+- Other small fixes here-there
 
 Week 8 Update:
 - Demo on monday 25.11.2024
